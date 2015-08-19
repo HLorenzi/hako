@@ -83,6 +83,7 @@
 		<Unit filename="src/hako/util/debug.h" />
 		<Unit filename="src/hako/util/ds_depchain.h" />
 		<Unit filename="src/hako/util/ds_flatmap.h" />
+		<Unit filename="src/hako/util/ds_flattree.h" />
 		<Unit filename="src/hako/util/ds_refvector.h" />
 		<Unit filename="src/hako/util/ds_vector.h" />
 		<Unit filename="src/hako/util/math_vector.h" />

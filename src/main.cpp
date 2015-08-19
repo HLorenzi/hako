@@ -1,5 +1,5 @@
 #include <hako/engine.h>
-#include <hako/util/ds_vector.h>
+#include <hako/util/ds_flattree.h>
 #include <stdio.h>
 
 
@@ -8,18 +8,26 @@ void loop();
 
 int main()
 {
-    Hako::Engine engine;
-    engine.init();
+	Hako::Engine engine;
+	engine.init();
 
-	Hako::DS::Vector<int> int_vec;
-	int_vec.init();
-	int_vec.add(33);
-	int_vec.add(44);
-	int_vec.add(55);
+	Hako::DS::FlatTree<int> tree;
+	tree.init();
+	auto ref33 = tree.add(33);
+	auto ref44 = tree.add(44);
+	auto ref55 = tree.add(55);
+	auto ref66 = tree.add_child(ref44, 66);
+	auto ref77 = tree.add_child(ref44, 77);
+	auto ref88 = tree.add_child(ref33, 88);
 
-	printf("int_vec: [%d, %d, %d]\n", int_vec[0], int_vec[1], int_vec[2]);
+	printf("tree: [%d [%d], %d [%d, %d], %d]\n",
+		tree[ref33], tree[ref88],
+		tree[ref44], tree[ref66], tree[ref77],
+		tree[ref55]);
 
-	engine.loop(Hako::Callback<void>::make_static<loop>());
+	//engine.loop(Hako::Callback<void>::make_static<loop>());
+
+	return 0;
 }
 
 

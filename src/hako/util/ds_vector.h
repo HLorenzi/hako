@@ -34,7 +34,7 @@ namespace Hako
 			// Initializes the vector storage with the engine's allocator.
 			void init()
 			{
-				HAKO_ASSERT(!this->initialized, "init() was already called");
+				HAKO_ASSERT(!this->initialized, "init() has already been called");
 				this->allocator        = Hako::Engine::singleton()->memory_manager.get_allocator();
 				this->data             = nullptr;
 				this->element_capacity = 0;
@@ -48,7 +48,7 @@ namespace Hako
 			// Initializes the vector storage with a custom allocator.
 			void init_custom(Hako::Allocator allocator)
 			{
-				HAKO_ASSERT(!this->initialized, "init() was already called");
+				HAKO_ASSERT(!this->initialized, "init() has already been called");
 				this->allocator        = allocator;
 				this->data             = nullptr;
 				this->element_capacity = 0;
@@ -93,6 +93,20 @@ namespace Hako
 				this->data[this->element_num] = element;
 				this->element_num += 1;
 				return this->element_num - 1;
+			}
+
+
+			unsigned int insert(T element, unsigned int before_position)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				this->ensure_capacity(this->element_num + 1);
+
+				for (int i = this->element_num; i > before_position; i--)
+					this->data[i] = this->data[i - 1];
+
+				this->data[before_position] = element;
+				this->element_num += 1;
+				return before_position;
 			}
 
 
