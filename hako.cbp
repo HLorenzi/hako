@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="hako" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Win32 Debug">
+				<Option output="bin/win32_debug/hako" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/win32_debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=core2" />
+					<Add option="-pedantic" />
+					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-fno-rtti" />
+					<Add option="-fno-exceptions" />
+					<Add option="-fstrict-aliasing" />
+					<Add option="-DHAKO_BUILD_DEBUG" />
+					<Add option="-DHAKO_MODULE_OS_WIN32" />
+					<Add option="-DHAKO_MODULE_MEM_STD" />
+					<Add option="-DHAKO_MODULE_LOOP_WIN32" />
+				</Compiler>
+				<Linker>
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add option="-lopengl32" />
+					<Add option="-lgdi32" />
+				</Linker>
+			</Target>
+			<Target title="Win32 Release">
+				<Option output="bin/win32_release/hako" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/win32_release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=core2" />
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-pedantic" />
+					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-fno-rtti" />
+					<Add option="-fno-exceptions" />
+					<Add option="-fstrict-aliasing" />
+					<Add option="-DHAKO_MODULE_OS_WIN32" />
+					<Add option="-DHAKO_MODULE_MEM_STD" />
+					<Add option="-DHAKO_MODULE_LOOP_WIN32" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add option="-lopengl32" />
+					<Add option="-lgdi32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="src/" />
+		</Compiler>
+		<Unit filename="src/hako/bindings.h" />
+		<Unit filename="src/hako/bindings_def.h" />
+		<Unit filename="src/hako/engine.cpp" />
+		<Unit filename="src/hako/engine.h" />
+		<Unit filename="src/hako/loop/dummy/loop_manager.h" />
+		<Unit filename="src/hako/loop/win32/loop_manager.cpp" />
+		<Unit filename="src/hako/loop/win32/loop_manager.h" />
+		<Unit filename="src/hako/mem/dummy/mem_manager.cpp" />
+		<Unit filename="src/hako/mem/dummy/mem_manager.h" />
+		<Unit filename="src/hako/mem/std/mem_manager.cpp" />
+		<Unit filename="src/hako/mem/std/mem_manager.h" />
+		<Unit filename="src/hako/util/allocator.h" />
+		<Unit filename="src/hako/util/callback.h" />
+		<Unit filename="src/hako/util/debug.cpp" />
+		<Unit filename="src/hako/util/debug.h" />
+		<Unit filename="src/hako/util/ds_depchain.h" />
+		<Unit filename="src/hako/util/ds_flatmap.h" />
+		<Unit filename="src/hako/util/ds_refvector.h" />
+		<Unit filename="src/hako/util/ds_vector.h" />
+		<Unit filename="src/hako/util/math_vector.h" />
+		<Unit filename="src/hako/util/string.h" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
