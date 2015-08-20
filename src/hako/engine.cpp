@@ -27,6 +27,13 @@ void Hako::Engine::init()
 	singleton_engine = this;
 	this->memory_manager.init();
 	this->loop_manager.init();
+	this->gfx_manager.init();
+}
+
+
+void Hako::Engine::show()
+{
+	this->gfx_manager.show();
 }
 
 

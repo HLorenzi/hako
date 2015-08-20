@@ -11,6 +11,7 @@ int main()
 	// Init the engine.
 	Hako::Engine engine;
 	engine.init();
+	engine.show();
 
 	// Scene API test.
 	Hako::Gfx::Scene scene;

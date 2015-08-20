@@ -13,4 +13,8 @@
 #include <hako/loop/win32/loop_manager.h>
 
 
+#include <hako/gfx/scene.h>
+#include <hako/gfx/win32/gfx_manager.h>
+
+
 #endif

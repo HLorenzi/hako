@@ -11,12 +11,14 @@ namespace Hako
 	class Engine
 	{
 	public:
+		void init();
+		void show();
+		void loop(Hako::Callback<void> loop_callback);
+
+
 		Hako::MemoryManager memory_manager;
 		Hako::LoopManager   loop_manager;
-
-
-		void init();
-		void loop(Hako::Callback<void> loop_callback);
+		Hako::GfxManager    gfx_manager;
 	};
 
 

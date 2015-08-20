@@ -2,7 +2,6 @@
 #define HAKO_BINDINGS_H
 
 
-
 namespace Hako
 {
 	class Engine;
@@ -11,6 +10,8 @@ namespace Hako
 	namespace Dummy
 	{
 		class MemoryManager;
+		class LoopManager;
+		class GfxManager;
 	}
 
 
@@ -23,6 +24,13 @@ namespace Hako
 	namespace Win32
 	{
 		class LoopManager;
+		class GfxManager;
+	}
+
+
+	namespace OpenGL
+	{
+
 	}
 
 
@@ -33,10 +41,17 @@ namespace Hako
 	#endif
 
 
-	#ifdef HAKO_MODULE_LOOP_WIN32
+	#ifdef HAKO_MODULE_OS_WIN32
 		typedef Hako::Win32::LoopManager LoopManager;
 	#else
 		typedef Hako::Dummy::LoopManager LoopManager;
+	#endif
+
+
+	#ifdef HAKO_MODULE_OS_WIN32
+		typedef Hako::Win32::GfxManager GfxManager;
+	#else
+		typedef Hako::Dummy::GfxManager GfxManager;
 	#endif
 }
 

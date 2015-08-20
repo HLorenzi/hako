@@ -24,7 +24,7 @@
 					<Add option="-DHAKO_BUILD_DEBUG" />
 					<Add option="-DHAKO_MODULE_OS_WIN32" />
 					<Add option="-DHAKO_MODULE_MEM_STD" />
-					<Add option="-DHAKO_MODULE_LOOP_WIN32" />
+					<Add option="-DHAKO_MODULE_GFX_OPENGL" />
 				</Compiler>
 				<Linker>
 					<Add option="-static-libgcc" />
@@ -52,7 +52,7 @@
 					<Add option="-fstrict-aliasing" />
 					<Add option="-DHAKO_MODULE_OS_WIN32" />
 					<Add option="-DHAKO_MODULE_MEM_STD" />
-					<Add option="-DHAKO_MODULE_LOOP_WIN32" />
+					<Add option="-DHAKO_MODULE_GFX_OPENGL" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -70,8 +70,17 @@
 		<Unit filename="src/hako/bindings_def.h" />
 		<Unit filename="src/hako/engine.cpp" />
 		<Unit filename="src/hako/engine.h" />
+		<Unit filename="src/hako/gfx/dummy/gfx_manager.h" />
+		<Unit filename="src/hako/gfx/dummy/mesh.cpp" />
+		<Unit filename="src/hako/gfx/dummy/mesh.h" />
+		<Unit filename="src/hako/gfx/mesh.h" />
+		<Unit filename="src/hako/gfx/opengl/extensions_win32.cpp" />
+		<Unit filename="src/hako/gfx/opengl/extensions_win32.h" />
+		<Unit filename="src/hako/gfx/opengl/includes.h" />
 		<Unit filename="src/hako/gfx/scene.cpp" />
 		<Unit filename="src/hako/gfx/scene.h" />
+		<Unit filename="src/hako/gfx/win32/gfx_manager.cpp" />
+		<Unit filename="src/hako/gfx/win32/gfx_manager.h" />
 		<Unit filename="src/hako/loop/dummy/loop_manager.h" />
 		<Unit filename="src/hako/loop/win32/loop_manager.cpp" />
 		<Unit filename="src/hako/loop/win32/loop_manager.h" />
@@ -88,6 +97,7 @@
 		<Unit filename="src/hako/util/ds_flattree.h" />
 		<Unit filename="src/hako/util/ds_refvector.h" />
 		<Unit filename="src/hako/util/ds_vector.h" />
+		<Unit filename="src/hako/util/error.h" />
 		<Unit filename="src/hako/util/math_vector.h" />
 		<Unit filename="src/hako/util/string.h" />
 		<Unit filename="src/main.cpp" />
