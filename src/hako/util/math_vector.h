@@ -6,14 +6,24 @@ namespace Hako
 {
 	namespace Math
 	{
-		template <int N>
-		class Vector
+		class Vector2
 		{
 		public:
-			float element[N];
+			float x, y;
+		};
 
-			Vector()          { for (int i = 0; i < N; i++) element[i] = 0;   }
-			Vector(float val) { for (int i = 0; i < N; i++) element[i] = val; }
+
+		class Vector3
+		{
+		public:
+			float x, y, z;
+		};
+
+
+		class Matrix4
+		{
+		public:
+			float cells[4][4];
 		};
 	}
 }

@@ -8,6 +8,9 @@
 
 namespace Hako
 {
+	Hako::Allocator singleton_allocator();
+
+
 	namespace DS
 	{
 		// A contiguous-memory list data structure.
@@ -35,7 +38,7 @@ namespace Hako
 			void init()
 			{
 				HAKO_ASSERT(!this->initialized, "init() has already been called");
-				this->allocator        = Hako::Engine::singleton()->memory_manager.get_allocator();
+				this->allocator        = Hako::singleton_allocator();
 				this->data             = nullptr;
 				this->element_capacity = 0;
 				this->element_num      = 0;

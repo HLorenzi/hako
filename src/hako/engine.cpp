@@ -4,21 +4,27 @@
 #include <stdlib.h>
 
 
-Hako::Engine* Hako::Engine::g_engine = nullptr;
+Hako::Engine* singleton_engine = nullptr;
 
 
-Hako::Engine* Hako::Engine::singleton()
+Hako::Engine* Hako::singleton()
 {
-	HAKO_ASSERT(Hako::Engine::g_engine != nullptr, "engine has not been initialized");
-	return Hako::Engine::g_engine;
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
+	return singleton_engine;
+}
+
+
+Hako::Allocator Hako::singleton_allocator()
+{
+	return Hako::singleton()->memory_manager.get_allocator();
 }
 
 
 void Hako::Engine::init()
 {
-	HAKO_ASSERT(Hako::Engine::g_engine == nullptr, "engine has already been initialized");
+	HAKO_ASSERT(singleton_engine == nullptr, "engine has already been initialized");
 
-	Hako::Engine::g_engine = this;
+	singleton_engine = this;
 	this->memory_manager.init();
 	this->loop_manager.init();
 }

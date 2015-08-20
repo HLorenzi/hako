@@ -15,12 +15,13 @@ namespace Hako
 		Hako::LoopManager   loop_manager;
 
 
-		static Engine* g_engine;
-		static Engine* singleton();
-
 		void init();
 		void loop(Hako::Callback<void> loop_callback);
 	};
+
+
+	Engine*         singleton();
+	Hako::Allocator singleton_allocator();
 }
 
 

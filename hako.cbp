@@ -70,6 +70,8 @@
 		<Unit filename="src/hako/bindings_def.h" />
 		<Unit filename="src/hako/engine.cpp" />
 		<Unit filename="src/hako/engine.h" />
+		<Unit filename="src/hako/gfx/scene.cpp" />
+		<Unit filename="src/hako/gfx/scene.h" />
 		<Unit filename="src/hako/loop/dummy/loop_manager.h" />
 		<Unit filename="src/hako/loop/win32/loop_manager.cpp" />
 		<Unit filename="src/hako/loop/win32/loop_manager.h" />
