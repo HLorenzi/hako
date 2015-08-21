@@ -28,6 +28,11 @@ namespace Hako
             void lerp_projection_frustum     (float left, float right, float top, float bottom, float znear, float zfar);
             void set_projection_custom       (Hako::Math::Matrix4 matrix);
 
+			void set_lookat  (Hako::Math::Vector3 eye, Hako::Math::Vector3 target, Hako::Math::Vector3 up);
+			void lerp_lookat (Hako::Math::Vector3 eye, Hako::Math::Vector3 target, Hako::Math::Vector3 up);
+
+			Hako::Math::Matrix4 get_matrix_projview(float interpolation);
+
 
 		protected:
 			enum class ProjectionKind
@@ -38,7 +43,10 @@ namespace Hako
 			};
 
 
-			ProjectionKind projection_kind;
+			ProjectionKind      projection_kind;
+			Hako::Math::Vector3 eye,    eye_last;
+			Hako::Math::Vector3 target, target_last;
+			Hako::Math::Vector3 up,     up_last;
 			union
 			{
 				struct

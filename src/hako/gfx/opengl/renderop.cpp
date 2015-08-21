@@ -40,6 +40,18 @@ void Hako::OpenGL::RenderOperation::render(float interpolation)
 {
 	HAKO_UNUSED(interpolation);
 
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	if (this->should_clear_color)
+		glClearColor(this->clear_color.r, this->clear_color.g, this->clear_color.b, this->clear_color.a);
+
+	if (this->should_clear_depth)
+		glClearDepth(this->clear_depth);
+
+	glClear(
+		(this->should_clear_color ? GL_COLOR_BUFFER_BIT : 0) |
+		(this->should_clear_depth ? GL_DEPTH_BUFFER_BIT : 0));
+
 	for (unsigned int i = 0; i < this->scene->tree.count(); i++)
 	{
 		Hako::Gfx::SceneNode& node = this->scene->tree.get_by_index(i);
@@ -58,11 +70,10 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
 	Hako::OpenGL::Material* material = renderer->data.renderer.material;
 	Hako::OpenGL::Mesh* mesh         = renderer->data.renderer.mesh;
 
-	auto matrix_projview = Hako::Math::Matrix4::make_identity();
+	auto matrix_projview = this->camera->get_matrix_projview(0);
 	auto matrix_model    = Hako::Math::Matrix4::make_identity();
 
 	glUseProgram(material->gl_shader_program);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glEnableVertexAttribArray(material->attrib_position);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->gl_data_buffers[Hako::Gfx::mesh_data_bit_to_index(Hako::Gfx::MeshData::Position)]);

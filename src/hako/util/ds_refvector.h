@@ -32,6 +32,19 @@ namespace Hako
 				}
 
 
+				void invalidate()
+				{
+					this->item_identifier = 0;
+					this->cached_index    = 0;
+				}
+
+
+				bool is_invalid()
+				{
+					return (this->item_identifier == 0);
+				}
+
+
 				IdentifierType item_identifier;
 				unsigned int   cached_index;
 			};
@@ -83,8 +96,20 @@ namespace Hako
 			}
 
 
+			void remove(Reference& ref)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(!ref.is_invalid(), "reference is invalid");
+				this->refresh_reference(&ref);
+				this->items      .remove(ref.cached_index);
+				this->identifiers.remove(ref.cached_index);
+				ref.invalidate();
+			}
+
+
 			unsigned int length()
 			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
 				return this->items.length();
 			}
 
@@ -108,6 +133,8 @@ namespace Hako
 
 			Reference make_reference(unsigned int index)
 			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->length(), "index out of bounds");
 				Reference refer;
 				refer.item_identifier = this->identifiers[index];
 				refer.cached_index    = index;
@@ -117,6 +144,9 @@ namespace Hako
 
 			void refresh_reference(Reference* refer)
 			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(refer != nullptr, "reference must not be null");
+
                 if (refer->item_identifier == 0)
 					return;
 

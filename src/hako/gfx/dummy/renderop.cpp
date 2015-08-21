@@ -28,6 +28,9 @@ void Hako::Dummy::Gfx::RenderOperation::init()
 	for (int i = 0; i < 4; i++)
 		this->color_buffers[i] = nullptr;
 
+	this->should_clear_color = false;
+	this->should_clear_depth = false;
+
 #ifdef HAKO_BUILD_DEBUG
 	this->initialized = true;
 #endif
@@ -58,6 +61,24 @@ void Hako::Dummy::Gfx::RenderOperation::set_depth_buffer(Hako::Gfx::FrameBuffer*
 	HAKO_ASSERT(this->initialized, "init() must be called before");
 	HAKO_ASSERT(!this->generated, "cannot change render operation after it has been generated");
 	this->depth_buffer = depthbuf;
+}
+
+
+void Hako::Dummy::Gfx::RenderOperation::set_clear_color(Hako::Math::Color color)
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	HAKO_ASSERT(!this->generated, "cannot change render operation after it has been generated");
+	this->should_clear_color = true;
+	this->clear_color        = color;
+}
+
+
+void Hako::Dummy::Gfx::RenderOperation::set_clear_depth(float depth)
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	HAKO_ASSERT(!this->generated, "cannot change render operation after it has been generated");
+	this->should_clear_depth = true;
+	this->clear_depth        = depth;
 }
 
 

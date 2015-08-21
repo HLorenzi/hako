@@ -122,6 +122,9 @@
 		<Unit filename="src/hako/util/math_vector.h" />
 		<Unit filename="src/hako/util/string.h" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/tests/basic.cpp" />
+		<Unit filename="src/tests/basic.h" />
+		<Unit filename="src/tests/framework.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -14,6 +14,7 @@ namespace Hako
 		void init();
 		void show();
 		void loop(Hako::Callback<void> loop_callback);
+		void shutdown();
 
 
 		Hako::MemoryManager memory_manager;

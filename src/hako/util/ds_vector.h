@@ -114,6 +114,18 @@ namespace Hako
 			}
 
 
+			void remove(unsigned int index)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->length(), "index out of bounds");
+
+				for (int i = index; i < this->length() - 1; i++)
+					this->data[i] = this->data[i + 1];
+
+				this->element_num -= 1;
+			}
+
+
 			// Ensures that the vector's capacity is larger than or equal to
 			// the given value, growing the storage space if necessary.
 			void ensure_capacity(const unsigned int capacity)

@@ -28,8 +28,8 @@ namespace Hako
 			virtual Hako::Error shutdown()
 				{ return Hako::Error::ok(); }
 
-			RenderOperationReference add_operation(Hako::Gfx::RenderOperation* scene);
-
+			RenderOperationReference add_operation    (Hako::Gfx::RenderOperation* scene);
+			void                     remove_operation (RenderOperationReference& ref);
 
 		protected:
 			Hako::DS::DependencyChain<Hako::Gfx::RenderOperation*> operations;

@@ -12,3 +12,9 @@ Hako::Dummy::GfxManager::RenderOperationReference Hako::Dummy::GfxManager::add_o
 {
 	return this->operations.add(op);
 }
+
+
+void Hako::Dummy::GfxManager::remove_operation(RenderOperationReference& ref)
+{
+	this->operations.remove(ref);
+}

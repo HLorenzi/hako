@@ -68,6 +68,15 @@ namespace Hako
 		};
 
 
+		class Color
+		{
+		public:
+			float r, g, b, a;
+
+			static Color make(float rr, float gg, float bb, float aa) { Color c; c.r = rr; c.g = gg; c.b = bb; c.a = aa; return c; }
+		};
+
+
 		class alignas(16) Matrix4
 		{
 		public:
