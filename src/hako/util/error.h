@@ -8,9 +8,7 @@ namespace Hako
 	{
 		NoError,
 		Unknown,
-		OutOfMemory,
-		OutOfResources,
-		InvalidOperation
+		Unsupported
 	};
 
 

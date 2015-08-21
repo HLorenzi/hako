@@ -13,6 +13,7 @@
 	namespace Hako
 	{
 		void assert_handler(bool condition, const char* msg, const char* filename, int line);
+		void warning_handler(const char* msg, const char* filename, int line);
 	}
 
 
@@ -26,9 +27,15 @@
 		HAKO_ASSERT(false, msg)
 
 
+	// Runtime warning that is printed to the console, but does not crash the application.
+	#define HAKO_WARNING(msg) \
+		do { Hako::warning_handler(msg, __FILE__, __LINE__); } while (0)
+
+
 #else
 	#define HAKO_ASSERT(cond, msg) do { } while (0)
-	#define HAKO_ERROR(msg) do { } while (0)
+	#define HAKO_ERROR(msg)        do { } while (0)
+	#define HAKO_WARNING(msg)      do { } while (0)
 #endif
 
 #endif

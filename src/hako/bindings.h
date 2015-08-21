@@ -16,6 +16,7 @@ namespace Hako
 
 		namespace Gfx
 		{
+			class Mesh;
 			class FrameBuffer;
 			class RenderOperation;
 		}
@@ -38,6 +39,8 @@ namespace Hako
 	namespace OpenGL
 	{
 		class Mesh;
+		class FrameBuffer;
+		class RenderOperation;
 	}
 
 
@@ -69,9 +72,9 @@ namespace Hako
 
 
 		#ifdef HAKO_MODULE_GFX_OPENGL
-			typedef Hako::OpenGL::Mesh                Mesh;
-			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;
-			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;
+			typedef Hako::OpenGL::Mesh            Mesh;
+			typedef Hako::OpenGL::FrameBuffer     FrameBuffer;
+			typedef Hako::OpenGL::RenderOperation RenderOperation;
 		#else
 			typedef Hako::Dummy::Gfx::Mesh            Mesh;
 			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;

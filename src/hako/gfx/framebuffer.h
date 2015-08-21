@@ -8,7 +8,10 @@ namespace Hako
 	{
 		enum class FrameBufferFormat
 		{
-			RGBA8
+			RGBA8,
+			RGB16F,
+			RGBA16F,
+			Depth
 		};
 	}
 }

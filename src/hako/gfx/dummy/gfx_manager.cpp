@@ -3,12 +3,12 @@
 
 Hako::Error Hako::Dummy::GfxManager::init()
 {
-	this->scenes.init();
+	this->operations.init();
 	return this->internal_init();
 }
 
 
-Hako::Dummy::GfxManager::SceneReference Hako::Dummy::GfxManager::add_scene(Hako::Gfx::Scene* scene)
+Hako::Dummy::GfxManager::RenderOperationReference Hako::Dummy::GfxManager::add_operation(Hako::Gfx::RenderOperation* op)
 {
-	return this->scenes.add(scene);
+	return this->operations.add(op);
 }

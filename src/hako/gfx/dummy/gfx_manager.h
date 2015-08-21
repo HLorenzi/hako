@@ -14,7 +14,7 @@ namespace Hako
 		class GfxManager
 		{
 		public:
-			typedef Hako::DS::DependencyChain<Hako::Gfx::Scene*>::Reference SceneReference;
+			typedef Hako::DS::DependencyChain<Hako::Gfx::RenderOperation*>::Reference RenderOperationReference;
 
 
 			Hako::Error init();
@@ -28,11 +28,11 @@ namespace Hako
 			virtual Hako::Error shutdown()
 				{ return Hako::Error::ok(); }
 
-			SceneReference add_scene(Hako::Gfx::Scene* scene);
+			RenderOperationReference add_operation(Hako::Gfx::RenderOperation* scene);
 
 
 		protected:
-			Hako::DS::DependencyChain<Hako::Gfx::Scene*> scenes;
+			Hako::DS::DependencyChain<Hako::Gfx::RenderOperation*> operations;
 		};
 	}
 }

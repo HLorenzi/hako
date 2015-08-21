@@ -1,7 +1,7 @@
 #ifdef HAKO_BUILD_DEBUG
 
 
-#include "debug.h"
+#include <hako/util/debug.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
@@ -24,6 +24,17 @@ void Hako::assert_handler(bool condition, const char* msg, const char* filename,
 	*((int*)0) = 1234;
 
 	abort();
+}
+
+
+void Hako::warning_handler(const char* msg, const char* filename, int line)
+{
+	printf(
+		"==========================================================\n"
+		"HAKO_WARNING: %s\n"
+		"%s : %d\n"
+		"==========================================================\n\n",
+		msg, filename, line);
 }
 
 

@@ -25,7 +25,7 @@ namespace Hako
 {
 	namespace OpenGL
 	{
-		void check_error(const char* file, int line);
+		bool check_error(const char* file, int line);
 	}
 }
 

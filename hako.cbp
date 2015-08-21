@@ -86,9 +86,13 @@
 		<Unit filename="src/hako/gfx/opengl/error.cpp" />
 		<Unit filename="src/hako/gfx/opengl/extensions_win32.cpp" />
 		<Unit filename="src/hako/gfx/opengl/extensions_win32.h" />
+		<Unit filename="src/hako/gfx/opengl/framebuffer.cpp" />
+		<Unit filename="src/hako/gfx/opengl/framebuffer.h" />
 		<Unit filename="src/hako/gfx/opengl/includes.h" />
 		<Unit filename="src/hako/gfx/opengl/mesh.cpp" />
 		<Unit filename="src/hako/gfx/opengl/mesh.h" />
+		<Unit filename="src/hako/gfx/opengl/renderop.cpp" />
+		<Unit filename="src/hako/gfx/opengl/renderop.h" />
 		<Unit filename="src/hako/gfx/scene.cpp" />
 		<Unit filename="src/hako/gfx/scene.h" />
 		<Unit filename="src/hako/gfx/win32/gfx_manager.cpp" />
@@ -110,6 +114,7 @@
 		<Unit filename="src/hako/util/ds_refvector.h" />
 		<Unit filename="src/hako/util/ds_vector.h" />
 		<Unit filename="src/hako/util/error.h" />
+		<Unit filename="src/hako/util/math_vector.cpp" />
 		<Unit filename="src/hako/util/math_vector.h" />
 		<Unit filename="src/hako/util/string.h" />
 		<Unit filename="src/main.cpp" />
