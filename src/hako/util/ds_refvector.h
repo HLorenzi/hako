@@ -2,7 +2,6 @@
 #define HAKO_UTIL_DS_REFVECTOR_H
 
 
-#include <hako/util/debug.h>
 #include <hako/util/ds_vector.h>
 
 
@@ -10,143 +9,151 @@ namespace Hako
 {
 	namespace DS
 	{
-		// A contiguous-memory list from which items are accessed using
-		// a custom reference type, which keeps their validity even after
-		// the list is changed/reallocated.
 		template <typename T>
 		class RefVector
 		{
-		public:
+		protected:
 			typedef unsigned int IdentifierType;
 
 
+		public:
 			class Reference
 			{
+			public:
 				friend class RefVector<T>;
 
-			protected:
+
+				static Reference make_null()
+				{
+					Reference refer;
+					refer.item_identifier = 0;
+					refer.cached_index    = 0;
+					return refer;
+				}
+
+
 				IdentifierType item_identifier;
-				unsigned int   cached_generation;
 				unsigned int   cached_index;
 			};
 
 
-			void init(Hako::MemCallbacks mem_callbacks, const unsigned int capacity)
+			RefVector()
 			{
-				HAKO_ASSERT(!this->initialized, "init() was already called");
-				this->data        .init(mem_callbacks, capacity);
-				this->identifiers .init(mem_callbacks, capacity);
-
-				this->current_generation = 1;
-				this->current_identifier = 1;
-				HAKO_ONLYINDEBUG( this->initialized = true; )
+			#ifdef HAKO_BUILD_DEBUG
+				this->initialized = false;
+			#endif
 			}
 
 
-			// Retrieves the raw pointer to storage.
-			T* get_data_ptr()
+			void init()
 			{
-				HAKO_ASSERT(this->initialized, "init() must be called before");
-				return this->data.get_data_ptr();
+				HAKO_ASSERT(!this->initialized, "init() has already been called");
+
+				this->next_item_identifier = 1;
+
+				this->items       .init();
+				this->identifiers .init();
+
+			#ifdef HAKO_BUILD_DEBUG
+				this->initialized = true;
+			#endif
 			}
 
 
-			// Retrieves the number of elements stored.
-			unsigned int get_length()
+			Reference add(T data)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
-				return this->data.get_length();
+
+				unsigned int item_position = this->items.add(data);
+				this->identifiers.add(this->get_next_identifier());
+
+				return this->make_reference(item_position);
 			}
 
 
-			// Appends an element to the end of the list, growing the storage space
-			// if necessary.
-			Reference add(T element)
+			Reference insert(T data, unsigned int before_position)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(before_position < this->length(), "index out of bounds");
 
-				unsigned int index = this->data.add(element);
+				this->items.insert(data, before_position);
+				this->identifiers.insert(this->get_next_identifier(), before_position);
 
-				this->identifiers.add(this->current_identifier);
-
-				HAKO_ONLYINDEBUG( unsigned int last_identifier = this->current_identifier; )
-				this->current_identifier += 1;
-				HAKO_ASSERT(this->current_identifier > last_identifier, "refvector identifier overflow");
-
-				return this->make_reference_to_index(index);
+				return this->make_reference(before_position);
 			}
 
 
-			// Retrieves an element using the given Reference.
-			T& get_element(Reference* ref)
+			unsigned int length()
+			{
+				return this->items.length();
+			}
+
+
+			T& operator [] (unsigned int index)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->length(), "index out of bounds");
+				return this->items[index];
+			}
 
-				// Get by cached index, if the generation is the same.
-				if (ref->cached_generation == this->current_generation)
+
+			T& operator [] (Reference& refer)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(refer.item_identifier != 0, "trying to access null reference");
+				this->refresh_reference(&refer);
+				return this->items[refer.cached_index];
+			}
+
+
+			Reference make_reference(unsigned int index)
+			{
+				Reference refer;
+				refer.item_identifier = this->identifiers[index];
+				refer.cached_index    = index;
+				return refer;
+			}
+
+
+			void refresh_reference(Reference* refer)
+			{
+                if (refer->item_identifier == 0)
+					return;
+
+				if (refer->cached_index < this->length() &&
+					this->identifiers[refer->cached_index] == refer->item_identifier)
+					return;
+
+				for (int i = 0; i < this->length(); i++)
 				{
-					HAKO_ASSERT(ref->cached_index < this->get_length(), "Reference corrupted, out of range");
-					return this->data.get_data_ptr()[ref->cached_index];
-				}
-
-				// Or, search for the item with the given identifier.
-				else
-				{
-					bool found = false;
-					unsigned int found_index = 0;
-					for (unsigned int i = 0; i < this->get_length(); i++)
+					if (this->identifiers[i] == refer->item_identifier)
 					{
-						if (this->identifiers[i] == ref->item_identifier)
-						{
-							found = true;
-							found_index = i;
-							break;
-						}
+						refer->cached_index = i;
+						return;
 					}
-
-					if (!found)
-						HAKO_ERROR("reference points to invalid item");
-
-                    // Update the Reference's cache.
-                    *ref = this->make_reference_to_index(found_index);
-                    return this->data.get_data_ptr()[found_index];
 				}
-			}
 
-
-			// Retrieves an element at the given position.
-			T& get_element_by_index(const unsigned int index)
-			{
-				HAKO_ASSERT(this->initialized, "init() must be called before");
-				HAKO_ASSERT(index < this->element_num, "index out of range");
-				return this->data[index];
-			}
-
-
-			// Retrieves an element at the given position.
-			T& operator [] (const unsigned int index)
-			{
-				return this->get_element_by_index(index);
+				HAKO_ERROR("reference points to a non-existent item");
 			}
 
 
 		protected:
-			Reference make_reference_to_index(const unsigned int index)
+			IdentifierType get_next_identifier()
 			{
-				Reference ref;
-				ref.cached_generation = this->current_generation;
-				ref.cached_index      = index;
-				ref.item_identifier   = this->identifiers[index];
-				return ref;
+				IdentifierType last_item_identifier = this->next_item_identifier;
+				this->next_item_identifier += 1;
+				HAKO_ASSERT(this->next_item_identifier > last_item_identifier, "item identifier overflow");
+				return last_item_identifier;
 			}
 
 
-			HAKO_ONLYINDEBUG( bool initialized = false; )
-
-			Hako::DS::Vector<T>              data;
+		#ifdef HAKO_BUILD_DEBUG
+			bool initialized;
+		#endif
+			Hako::DS::Vector<T>              items;
 			Hako::DS::Vector<IdentifierType> identifiers;
-			unsigned int                     current_generation;
-			IdentifierType                   current_identifier;
+
+			IdentifierType next_item_identifier;
 		};
 	}
 }

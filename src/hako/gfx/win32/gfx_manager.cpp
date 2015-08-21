@@ -6,7 +6,7 @@
 #include <hako/util/debug.h>
 
 
-Hako::Error Hako::Win32::GfxManager::init()
+Hako::Error Hako::Win32::GfxManager::internal_init()
 {
 	this->user_quit = false;
 	return Hako::Error::ok();

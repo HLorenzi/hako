@@ -1,5 +1,4 @@
 #include <hako/engine.h>
-#include <hako/gfx/scene.h>
 #include <stdio.h>
 
 

@@ -20,6 +20,7 @@ namespace Hako
 		public:
 			Vector()
 			{
+				this->data = nullptr;
 			#ifdef HAKO_BUILD_DEBUG
 				this->initialized = false;
 			#endif
@@ -28,8 +29,8 @@ namespace Hako
 
 			~Vector()
 			{
-				HAKO_ASSERT(this->initialized, "init() must be called before");
-				this->allocator.free.call(this->data);
+				if (this->data != nullptr)
+					this->allocator.free.call(this->data);
 				this->data = nullptr;
 			}
 

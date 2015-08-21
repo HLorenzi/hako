@@ -13,8 +13,13 @@
 #include <hako/loop/win32/loop_manager.h>
 
 
+#include <hako/gfx/mesh.h>
 #include <hako/gfx/scene.h>
+#include <hako/gfx/camera.h>
+#include <hako/gfx/dummy/gfx_manager.h>
+#include <hako/gfx/dummy/mesh.h>
 #include <hako/gfx/win32/gfx_manager.h>
+#include <hako/gfx/opengl/mesh.h>
 
 
 #endif

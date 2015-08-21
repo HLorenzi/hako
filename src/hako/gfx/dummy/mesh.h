@@ -20,7 +20,7 @@ namespace Hako
 				void init (unsigned int vertex_num, unsigned int index_num, int data_bitfield);
 
 				void set_data    (int data_bit, unsigned int start, unsigned int count, float* data);
-				void set_indices (unsigned int start, unsigned int count, int* indices);
+				void set_indices (unsigned int start, unsigned int count, unsigned int* indices);
 
 
 			protected:
@@ -35,7 +35,7 @@ namespace Hako
 					HAKO_UNUSED(data);
 				}
 
-				virtual void internal_set_indices (unsigned int start, unsigned int count, int* indices)
+				virtual void internal_set_indices (unsigned int start, unsigned int count, unsigned int* indices)
 				{
 					HAKO_UNUSED(start);
 					HAKO_UNUSED(count);

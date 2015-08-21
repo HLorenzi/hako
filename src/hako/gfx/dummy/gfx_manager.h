@@ -2,7 +2,9 @@
 #define HAKO_GFX_DUMMY_GFXMANAGER_H
 
 
+#include <hako/bindings.h>
 #include <hako/util/error.h>
+#include <hako/util/ds_depchain.h>
 
 
 namespace Hako
@@ -12,7 +14,12 @@ namespace Hako
 		class GfxManager
 		{
 		public:
-			virtual Hako::Error init()
+			typedef Hako::DS::DependencyChain<Hako::Gfx::Scene*>::Reference SceneReference;
+
+
+			Hako::Error init();
+
+			virtual Hako::Error internal_init()
 				{ return Hako::Error::ok(); }
 
 			virtual Hako::Error show()
@@ -20,6 +27,12 @@ namespace Hako
 
 			virtual Hako::Error shutdown()
 				{ return Hako::Error::ok(); }
+
+			SceneReference add_scene(Hako::Gfx::Scene* scene);
+
+
+		protected:
+			Hako::DS::DependencyChain<Hako::Gfx::Scene*> scenes;
 		};
 	}
 }

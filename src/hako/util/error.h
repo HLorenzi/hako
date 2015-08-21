@@ -31,6 +31,12 @@ namespace Hako
 		}
 
 
+		bool is_ok()
+		{
+			return (error_class == Hako::ErrorClass::NoError);
+		}
+
+
 		ErrorClass error_class;
 
 

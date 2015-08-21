@@ -1,3 +1,6 @@
+#ifdef HAKO_MODULE_GFX_OPENGL
+
+
 #ifndef HAKO_GFX_OPENGL_INCLUDES_H
 #define HAKO_GFX_OPENGL_INCLUDES_H
 
@@ -32,3 +35,5 @@ namespace Hako
 
 #endif
 
+
+#endif

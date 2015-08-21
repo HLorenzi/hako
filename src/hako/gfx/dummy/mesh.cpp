@@ -1,4 +1,5 @@
 #include <hako/gfx/dummy/mesh.h>
+#include <hako/gfx/mesh.h>
 #include <hako/util/debug.h>
 
 
@@ -19,6 +20,7 @@ Hako::Dummy::Gfx::Mesh::~Mesh()
 void Hako::Dummy::Gfx::Mesh::init(unsigned int vertex_num, unsigned int index_num, int data_bitfield)
 {
 	HAKO_ASSERT(!this->initialized, "init() has already been called");
+	HAKO_ASSERT((data_bitfield & Hako::Gfx::MeshData::Invalid) == 0, "invalid data bitfield");
 
 	this->vertex_num    = vertex_num;
 	this->index_num     = index_num;
@@ -41,7 +43,7 @@ void Hako::Dummy::Gfx::Mesh::set_data(int data_bit, unsigned int start, unsigned
 }
 
 
-void Hako::Dummy::Gfx::Mesh::set_indices(unsigned int start, unsigned int count, int* indices)
+void Hako::Dummy::Gfx::Mesh::set_indices(unsigned int start, unsigned int count, unsigned int* indices)
 {
 	HAKO_ASSERT(this->initialized, "init() must be called first");
 	HAKO_ASSERT(start + count <= this->index_num, "range out of bounds");

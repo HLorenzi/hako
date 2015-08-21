@@ -2,8 +2,8 @@
 #define HAKO_UTIL_DS_DEPCHAIN_H
 
 
-#include "refvector.h"
-#include <hako/common/debug.h>
+#include <hako/util/ds_refvector.h>
+#include <hako/util/debug.h>
 
 
 namespace Hako
@@ -42,19 +42,21 @@ namespace Hako
 
 
 		public:
-			void init_custom(const unsigned int capacity, Hako::Allocator allocator)
+			void init()
 			{
 				HAKO_ASSERT(!this->initialized, "init() was already called");
 
-				this->Hako::DS::RefVector<T>:: init(capacity, allocator);
-				this->dependency_list         .init(0, allocator);
-				this->exclusivity_list        .init(0, allocator);
+				this->Hako::DS::RefVector<T>:: init();
+				this->dependency_list         .init();
+				this->exclusivity_list        .init();
 
-				HAKO_ONLYINDEBUG( this->initialized = true; )
+			#ifdef HAKO_BUILD_DEBUG
+				this->initialized = true;
+			#endif
 			}
 
 
-			Hako::DS::RefVector<Dependency>::Reference add_dependency(Reference what_item, Reference depends_on)
+			typename Hako::DS::RefVector<Dependency>::Reference add_dependency(Reference what_item, Reference depends_on)
 			{
 				Dependency dep;
 				dep.what_item  = what_item;
@@ -63,7 +65,7 @@ namespace Hako
 			}
 
 
-			Hako::DS::RefVector<Exclusivity>::Reference add_exclusivity(Reference what_item, Reference is_exclusive_to)
+			typename Hako::DS::RefVector<Exclusivity>::Reference add_exclusivity(Reference what_item, Reference is_exclusive_to)
 			{
 				Exclusivity excl;
 				excl.what_item       = what_item;
@@ -73,7 +75,9 @@ namespace Hako
 
 
 		protected:
-			HAKO_ONLYINDEBUG( bool initialized = false; )
+		#ifdef HAKO_BUILD_DEBUG
+			bool initialized;
+		#endif
 
 			Hako::DS::RefVector<Dependency>  dependency_list;
 			Hako::DS::RefVector<Exclusivity> exclusivity_list;

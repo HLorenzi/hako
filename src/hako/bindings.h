@@ -12,6 +12,13 @@ namespace Hako
 		class MemoryManager;
 		class LoopManager;
 		class GfxManager;
+
+
+		namespace Gfx
+		{
+			class FrameBuffer;
+			class RenderOperation;
+		}
 	}
 
 
@@ -30,7 +37,7 @@ namespace Hako
 
 	namespace OpenGL
 	{
-
+		class Mesh;
 	}
 
 
@@ -53,6 +60,24 @@ namespace Hako
 	#else
 		typedef Hako::Dummy::GfxManager GfxManager;
 	#endif
+
+
+	namespace Gfx
+	{
+		class Scene;
+		class Camera;
+
+
+		#ifdef HAKO_MODULE_GFX_OPENGL
+			typedef Hako::OpenGL::Mesh                Mesh;
+			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;
+			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;
+		#else
+			typedef Hako::Dummy::Gfx::Mesh            Mesh;
+			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;
+			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;
+		#endif
+	}
 }
 
 

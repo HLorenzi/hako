@@ -16,7 +16,7 @@ namespace Hako
 		class GfxManager : public Hako::Dummy::GfxManager
 		{
 		public:
-			Hako::Error init() override;
+			Hako::Error internal_init() override;
 			Hako::Error show() override;
 			Hako::Error shutdown() override;
 

@@ -4,6 +4,7 @@
 
 #include <hako/util/ds_flattree.h>
 #include <hako/util/math_vector.h>
+#include <hako/bindings.h>
 
 
 namespace Hako
@@ -15,7 +16,7 @@ namespace Hako
 		public:
 			enum class Kind
 			{
-				Render,
+				Renderer,
 				Translation, Rotation, Scaling, CustomTransform
 			};
 
@@ -26,6 +27,8 @@ namespace Hako
 			static SceneNode make_scaling();
 			static SceneNode make_custom_transform();
 
+			void set_renderer_mesh    (Hako::Gfx::Mesh* mesh);
+			void set_renderer_options (int layer, unsigned int mask);
 			void set_translation      (Hako::Math::Vector3 position);
 			void lerp_translation     (Hako::Math::Vector3 position);
 			void set_rotation         (Hako::Math::Vector3 axis, float angle);
@@ -38,6 +41,13 @@ namespace Hako
 			Kind kind;
 			union
 			{
+				struct
+				{
+					Hako::Gfx::Mesh* mesh;
+					int              layer;
+					unsigned int     mask;
+				} renderer;
+
                 struct
                 {
 					Hako::Math::Vector3 position, position_last;

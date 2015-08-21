@@ -4,7 +4,7 @@
 Hako::Gfx::SceneNode Hako::Gfx::SceneNode::make_render()
 {
 	SceneNode node;
-	node.kind = SceneNode::Kind::Render;
+	node.kind = SceneNode::Kind::Renderer;
 	return node;
 }
 
@@ -40,6 +40,20 @@ Hako::Gfx::SceneNode Hako::Gfx::SceneNode::make_custom_transform()
 	return node;
 }
 
+
+void Hako::Gfx::SceneNode::set_renderer_mesh(Hako::Gfx::Mesh* mesh)
+{
+	HAKO_ASSERT(this->kind == SceneNode::Kind::Renderer, "scene node is not a renderer node");
+	this->data.renderer.mesh = mesh;
+}
+
+
+void Hako::Gfx::SceneNode::set_renderer_options(int layer, unsigned int mask)
+{
+	HAKO_ASSERT(this->kind == SceneNode::Kind::Renderer, "scene node is not a renderer node");
+	this->data.renderer.layer = layer;
+	this->data.renderer.mask  = mask;
+}
 
 
 void Hako::Gfx::SceneNode::set_translation(Hako::Math::Vector3 position)

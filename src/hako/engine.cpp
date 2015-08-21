@@ -33,11 +33,13 @@ void Hako::Engine::init()
 
 void Hako::Engine::show()
 {
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
 	this->gfx_manager.show();
 }
 
 
 void Hako::Engine::loop(Hako::Callback<void> loop_callback)
 {
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
 	this->loop_manager.loop(loop_callback);
 }
