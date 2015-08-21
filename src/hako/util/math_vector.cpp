@@ -1,6 +1,9 @@
 #include <hako/util/math_vector.h>
 
 
+float Hako::Math::pi = 3.1415926535f;
+
+
 float Hako::Math::lerp(float a, float b, float t)
 {
 	return a + (b - a) * t;
@@ -51,6 +54,18 @@ Hako::Math::Vector3 Hako::Math::slerp(Vector3 a, Vector3 b, float t)
 
 		return a * (sinMTAngle * invSinAngle) + b * (sinTAngle * invSinAngle);
 	}
+}
+
+
+float Hako::Math::deg_to_rad(float deg)
+{
+	return deg * Hako::Math::pi / 180.0f;
+}
+
+
+float Hako::Math::rad_to_deg(float rad)
+{
+	return rad * 180.0f / Hako::Math::pi;
 }
 
 

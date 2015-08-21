@@ -101,6 +101,9 @@
 		<Unit filename="src/hako/gfx/scene.h" />
 		<Unit filename="src/hako/gfx/win32/gfx_manager.cpp" />
 		<Unit filename="src/hako/gfx/win32/gfx_manager.h" />
+		<Unit filename="src/hako/helper/standard_materials.h" />
+		<Unit filename="src/hako/helper/standard_materials/dummy.cpp" />
+		<Unit filename="src/hako/helper/standard_materials/opengl.cpp" />
 		<Unit filename="src/hako/loop/dummy/loop_manager.h" />
 		<Unit filename="src/hako/loop/win32/loop_manager.cpp" />
 		<Unit filename="src/hako/loop/win32/loop_manager.h" />

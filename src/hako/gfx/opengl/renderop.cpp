@@ -75,9 +75,25 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
 
 	glUseProgram(material->gl_shader_program);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->gl_index_buffer);
+
 	glEnableVertexAttribArray(material->attrib_position);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->gl_data_buffers[Hako::Gfx::mesh_data_bit_to_index(Hako::Gfx::MeshData::Position)]);
 	glVertexAttribPointer(material->attrib_position, Hako::Gfx::mesh_data_bit_to_elem_num(Hako::Gfx::MeshData::Position), GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	if (material->attrib_color >= 0)
+	{
+		glEnableVertexAttribArray(material->attrib_color);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->gl_data_buffers[Hako::Gfx::mesh_data_bit_to_index(Hako::Gfx::MeshData::Color)]);
+		glVertexAttribPointer(material->attrib_color, Hako::Gfx::mesh_data_bit_to_elem_num(Hako::Gfx::MeshData::Color), GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+
+	if (material->attrib_texcoord >= 0)
+	{
+		glEnableVertexAttribArray(material->attrib_texcoord);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->gl_data_buffers[Hako::Gfx::mesh_data_bit_to_index(Hako::Gfx::MeshData::TexCoord)]);
+		glVertexAttribPointer(material->attrib_texcoord, Hako::Gfx::mesh_data_bit_to_elem_num(Hako::Gfx::MeshData::TexCoord), GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
 
 	glUniformMatrix4fv(material->uniform_matrix_projview, 1, GL_FALSE, (GLfloat*)matrix_projview.cell);
 	glUniformMatrix4fv(material->uniform_matrix_model,    1, GL_FALSE, (GLfloat*)matrix_model.cell);
@@ -88,8 +104,6 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
 void Hako::OpenGL::RenderOperation::draw_mesh(Hako::Gfx::SceneNode* renderer)
 {
 	Hako::OpenGL::Mesh* mesh = renderer->data.renderer.mesh;
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->gl_index_buffer);
 	glDrawRangeElements(GL_TRIANGLES, 0, mesh->index_num, mesh->index_num, GL_UNSIGNED_INT, (void*)0);
 	HAKO_OPENGL_CHECKERROR();
 }

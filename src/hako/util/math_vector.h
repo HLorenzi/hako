@@ -105,11 +105,16 @@ namespace Hako
 		};
 
 
+		extern float pi;
+
 		float   lerp(float a, float b, float t);
 		Vector2 lerp2(Vector2 a, Vector2 b, float t);
 		Vector3 lerp3(Vector3 a, Vector3 b, float t);
 		Vector4 lerp4(Vector4 a, Vector4 b, float t);
 		Vector3 slerp(Vector3 a, Vector3 b, float t);
+
+		float deg_to_rad(float deg);
+		float rad_to_deg(float deg);
 	}
 }
 
