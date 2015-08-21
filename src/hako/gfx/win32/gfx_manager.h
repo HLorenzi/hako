@@ -1,6 +1,9 @@
 #ifdef HAKO_MODULE_OS_WIN32
 
 
+#ifdef HAKO_MODULE_GFX_OPENGL
+
+
 #ifndef HAKO_GFX_WIN32_GFXMANAGER_H
 #define HAKO_GFX_WIN32_GFXMANAGER_H
 
@@ -22,6 +25,7 @@ namespace Hako
 
 			void process_events();
 			bool did_user_quit();
+			void render();
 
 
 		protected:
@@ -51,3 +55,5 @@ namespace Hako
 
 #endif
 
+
+#endif

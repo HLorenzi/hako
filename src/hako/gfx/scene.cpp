@@ -1,7 +1,7 @@
 #include <hako/gfx/scene.h>
 
 
-Hako::Gfx::SceneNode Hako::Gfx::SceneNode::make_render()
+Hako::Gfx::SceneNode Hako::Gfx::SceneNode::make_renderer()
 {
 	SceneNode node;
 	node.kind = SceneNode::Kind::Renderer;
@@ -41,10 +41,11 @@ Hako::Gfx::SceneNode Hako::Gfx::SceneNode::make_custom_transform()
 }
 
 
-void Hako::Gfx::SceneNode::set_renderer_mesh(Hako::Gfx::Mesh* mesh)
+void Hako::Gfx::SceneNode::set_renderer_mesh(Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material)
 {
 	HAKO_ASSERT(this->kind == SceneNode::Kind::Renderer, "scene node is not a renderer node");
-	this->data.renderer.mesh = mesh;
+	this->data.renderer.mesh     = mesh;
+	this->data.renderer.material = material;
 }
 
 

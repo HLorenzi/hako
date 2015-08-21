@@ -21,13 +21,13 @@ namespace Hako
 			};
 
 
-			static SceneNode make_render();
+			static SceneNode make_renderer();
 			static SceneNode make_translation();
 			static SceneNode make_rotation();
 			static SceneNode make_scaling();
 			static SceneNode make_custom_transform();
 
-			void set_renderer_mesh    (Hako::Gfx::Mesh* mesh);
+			void set_renderer_mesh    (Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material);
 			void set_renderer_options (int layer, unsigned int mask);
 			void set_translation      (Hako::Math::Vector3 position);
 			void lerp_translation     (Hako::Math::Vector3 position);
@@ -43,9 +43,10 @@ namespace Hako
 			{
 				struct
 				{
-					Hako::Gfx::Mesh* mesh;
-					int              layer;
-					unsigned int     mask;
+					Hako::Gfx::Mesh*     mesh;
+					Hako::Gfx::Material* material;
+					int                  layer;
+					unsigned int         mask;
 				} renderer;
 
                 struct
@@ -74,6 +75,9 @@ namespace Hako
 
 		class Scene
 		{
+			friend Hako::Gfx::RenderOperation;
+
+
 		public:
 			typedef Hako::DS::FlatTree<SceneNode>::Reference Reference;
 

@@ -29,6 +29,18 @@ namespace Hako
 		}
 
 
+		static Error unknown()
+		{
+			return Hako::Error::make(Hako::ErrorClass::Unknown);
+		}
+
+
+		static Error unsupported()
+		{
+			return Hako::Error::make(Hako::ErrorClass::Unsupported);
+		}
+
+
 		bool is_ok()
 		{
 			return (error_class == Hako::ErrorClass::NoError);

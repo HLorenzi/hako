@@ -21,6 +21,12 @@ namespace Hako
 
 		protected:
 			Hako::Error internal_generate() override;
+
+			void bind_mesh(Hako::Gfx::SceneNode* renderer);
+			void draw_mesh(Hako::Gfx::SceneNode* renderer);
+
+
+			GLuint gl_framebuffer;
 		};
 	}
 }

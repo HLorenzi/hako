@@ -26,11 +26,11 @@ Hako::Error Hako::OpenGL::FrameBuffer::internal_generate()
 		break;
 	default:
 		HAKO_WARNING("unimplemented framebuffer format");
-		return Hako::Error::make(Hako::ErrorClass::Unsupported);
+		return Hako::Error::unsupported();
 	}
 
 	if (HAKO_OPENGL_CHECKERROR())
-		return Hako::Error::make(Hako::ErrorClass::Unknown);
+		return Hako::Error::unknown();
 
 	return Hako::Error::ok();
 }

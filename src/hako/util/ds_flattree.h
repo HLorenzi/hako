@@ -82,10 +82,25 @@ namespace Hako
 			}
 
 
+			unsigned int count()
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				return this->nodes.length();
+			}
+
+
 			T& operator [] (Reference& refer)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
 				return this->nodes[refer].data;
+			}
+
+
+			T& get_by_index(unsigned int index)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->count(), "index out of bounds");
+				return this->nodes[index].data;
 			}
 
 

@@ -76,6 +76,8 @@
 		<Unit filename="src/hako/gfx/dummy/framebuffer.h" />
 		<Unit filename="src/hako/gfx/dummy/gfx_manager.cpp" />
 		<Unit filename="src/hako/gfx/dummy/gfx_manager.h" />
+		<Unit filename="src/hako/gfx/dummy/material.cpp" />
+		<Unit filename="src/hako/gfx/dummy/material.h" />
 		<Unit filename="src/hako/gfx/dummy/mesh.cpp" />
 		<Unit filename="src/hako/gfx/dummy/mesh.h" />
 		<Unit filename="src/hako/gfx/dummy/renderop.cpp" />
@@ -89,6 +91,8 @@
 		<Unit filename="src/hako/gfx/opengl/framebuffer.cpp" />
 		<Unit filename="src/hako/gfx/opengl/framebuffer.h" />
 		<Unit filename="src/hako/gfx/opengl/includes.h" />
+		<Unit filename="src/hako/gfx/opengl/material.cpp" />
+		<Unit filename="src/hako/gfx/opengl/material.h" />
 		<Unit filename="src/hako/gfx/opengl/mesh.cpp" />
 		<Unit filename="src/hako/gfx/opengl/mesh.h" />
 		<Unit filename="src/hako/gfx/opengl/renderop.cpp" />

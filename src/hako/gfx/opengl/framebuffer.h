@@ -13,8 +13,14 @@ namespace Hako
 {
 	namespace OpenGL
 	{
+		class RenderOperation;
+
+
 		class FrameBuffer : public Hako::Dummy::Gfx::FrameBuffer
 		{
+			friend class Hako::OpenGL::RenderOperation;
+
+
 		protected:
 			Hako::Error internal_generate() override;
 

@@ -32,6 +32,7 @@ void Hako::OpenGL::Mesh::internal_set_data(int data_bit, unsigned int start, uns
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->gl_data_buffers[Hako::Gfx::mesh_data_bit_to_index(data_bit)]);
 	glBufferData(GL_ARRAY_BUFFER, byte_length, data, GL_STATIC_DRAW);
+	HAKO_OPENGL_CHECKERROR();
 }
 
 
@@ -44,6 +45,7 @@ void Hako::OpenGL::Mesh::internal_set_indices(unsigned int start, unsigned int c
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->gl_index_buffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, byte_length, indices, GL_STATIC_DRAW);
+	HAKO_OPENGL_CHECKERROR();
 }
 
 

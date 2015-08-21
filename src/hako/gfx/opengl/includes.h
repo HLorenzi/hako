@@ -8,16 +8,15 @@
 #ifdef HAKO_MODULE_OS_WIN32
 	#include <windows.h>
 	#include <gl/gl.h>
-	#include "extensions_win32.h"
-#endif
+	#include <hako/gfx/opengl/extensions_win32.h>
 
-#ifdef HAKO_MODULE_OS_LINUX
+#elif HAKO_MODULE_OS_LINUX
 	#include <GL/glx.h>
 	#include <GL/gl.h>
 	#include <X11/X.h>
 	#include <X11/Xlib.h>
 	#include <X11/Xutil.h>
-	#include "extensions_linux.h"
+	#include <hako/gfx/opengl/extensions_win32.h>
 #endif
 
 

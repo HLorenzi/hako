@@ -17,6 +17,7 @@ namespace Hako
 		namespace Gfx
 		{
 			class Mesh;
+			class Material;
 			class FrameBuffer;
 			class RenderOperation;
 		}
@@ -39,6 +40,7 @@ namespace Hako
 	namespace OpenGL
 	{
 		class Mesh;
+		class Material;
 		class FrameBuffer;
 		class RenderOperation;
 	}
@@ -68,15 +70,18 @@ namespace Hako
 	namespace Gfx
 	{
 		class Scene;
+		class SceneNode;
 		class Camera;
 
 
 		#ifdef HAKO_MODULE_GFX_OPENGL
 			typedef Hako::OpenGL::Mesh            Mesh;
+			typedef Hako::OpenGL::Material        Material;
 			typedef Hako::OpenGL::FrameBuffer     FrameBuffer;
 			typedef Hako::OpenGL::RenderOperation RenderOperation;
 		#else
 			typedef Hako::Dummy::Gfx::Mesh            Mesh;
+			typedef Hako::Dummy::Gfx::Material        Material;
 			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;
 			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;
 		#endif

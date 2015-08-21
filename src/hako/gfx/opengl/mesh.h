@@ -13,8 +13,14 @@ namespace Hako
 {
 	namespace OpenGL
 	{
+		class RenderOperation;
+
+
 		class Mesh : public Hako::Dummy::Gfx::Mesh
 		{
+			friend class Hako::OpenGL::RenderOperation;
+
+
 		protected:
 			void internal_init        () override;
 			void internal_set_data    (int data_bit, unsigned int start, unsigned int count, float* data) override;

@@ -1,7 +1,11 @@
 #ifdef HAKO_MODULE_OS_WIN32
 
 
+#ifdef HAKO_MODULE_GFX_OPENGL
+
+
 #include <hako/gfx/win32/gfx_manager.h>
+#include <hako/bindings_def.h>
 #include <hako/gfx/opengl/includes.h>
 #include <hako/util/debug.h>
 
@@ -50,6 +54,12 @@ Hako::Error Hako::Win32::GfxManager::show()
 
 	this->opengl_enable(this->hwnd, &this->hdc, &this->hrc);
 	Hako::OpenGL::win32_load_extensions();
+
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+    SwapBuffers(this->hdc);
 
 	return Hako::Error::ok();
 }
@@ -152,6 +162,19 @@ void Hako::Win32::GfxManager::opengl_disable(HWND hwnd, HDC hdc, HGLRC hrc)
 	wglDeleteContext(hrc);
 	ReleaseDC(hwnd, hdc);
 }
+
+
+void Hako::Win32::GfxManager::render()
+{
+	for (unsigned int i = 0; i < this->operations.length(); i++)
+	{
+		this->operations[i]->render(0);
+	}
+    SwapBuffers(this->hdc);
+}
+
+
+#endif
 
 
 #endif

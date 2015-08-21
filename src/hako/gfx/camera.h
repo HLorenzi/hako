@@ -12,6 +12,9 @@ namespace Hako
 	{
 		class Camera
 		{
+			friend Hako::Gfx::RenderOperation;
+
+
 		public:
 			Camera();
 			~Camera();

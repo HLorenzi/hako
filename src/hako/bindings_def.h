@@ -19,10 +19,12 @@
 #include <hako/gfx/framebuffer.h>
 #include <hako/gfx/dummy/gfx_manager.h>
 #include <hako/gfx/dummy/mesh.h>
+#include <hako/gfx/dummy/material.h>
 #include <hako/gfx/dummy/framebuffer.h>
 #include <hako/gfx/dummy/renderop.h>
 #include <hako/gfx/win32/gfx_manager.h>
 #include <hako/gfx/opengl/mesh.h>
+#include <hako/gfx/opengl/material.h>
 #include <hako/gfx/opengl/framebuffer.h>
 #include <hako/gfx/opengl/renderop.h>
 
