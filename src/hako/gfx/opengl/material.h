@@ -28,6 +28,9 @@ namespace Hako
 			void set_culling(Hako::Gfx::CullFunc func);
 			void set_render_state();
 
+			unsigned int get_texture_slot_num() override;
+			int get_texture_slot(const char* name) override;
+
 
 		protected:
 			void        internal_init() override;

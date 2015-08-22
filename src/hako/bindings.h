@@ -17,6 +17,7 @@ namespace Hako
 		namespace Gfx
 		{
 			class Mesh;
+			class Texture;
 			class Material;
 			class FrameBuffer;
 			class RenderOperation;
@@ -40,6 +41,7 @@ namespace Hako
 	namespace OpenGL
 	{
 		class Mesh;
+		class Texture;
 		class Material;
 		class FrameBuffer;
 		class RenderOperation;
@@ -72,6 +74,7 @@ namespace Hako
 		class Scene;
 		class SceneNode;
 		class Camera;
+		class MaterialProperties;
 		enum class DepthTestFunc;
 		enum class BlendFunc;
 		enum class CullFunc;
@@ -79,11 +82,13 @@ namespace Hako
 
 		#ifdef HAKO_MODULE_GFX_OPENGL
 			typedef Hako::OpenGL::Mesh            Mesh;
+			typedef Hako::OpenGL::Texture         Texture;
 			typedef Hako::OpenGL::Material        Material;
 			typedef Hako::OpenGL::FrameBuffer     FrameBuffer;
 			typedef Hako::OpenGL::RenderOperation RenderOperation;
 		#else
 			typedef Hako::Dummy::Gfx::Mesh            Mesh;
+			typedef Hako::Dummy::Gfx::Texture         Texture;
 			typedef Hako::Dummy::Gfx::Material        Material;
 			typedef Hako::Dummy::Gfx::FrameBuffer     FrameBuffer;
 			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;

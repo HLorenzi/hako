@@ -84,6 +84,8 @@
 		<Unit filename="src/hako/gfx/dummy/renderop.h" />
 		<Unit filename="src/hako/gfx/framebuffer.h" />
 		<Unit filename="src/hako/gfx/material.h" />
+		<Unit filename="src/hako/gfx/matproperties.cpp" />
+		<Unit filename="src/hako/gfx/matproperties.h" />
 		<Unit filename="src/hako/gfx/mesh.cpp" />
 		<Unit filename="src/hako/gfx/mesh.h" />
 		<Unit filename="src/hako/gfx/opengl/error.cpp" />

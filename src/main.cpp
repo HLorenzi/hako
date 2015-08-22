@@ -9,10 +9,10 @@ int main()
 	engine.init();
 	engine.show();
 
-	// Set up a concrete Test::Framwork implementation.
+	// Set up a concrete Test::Framework implementation.
 	Test::Basic basic_test;
 
-	// Run the generic test.
+	// Run the test.
 	Test::Framework* test = &basic_test;
 	test->init();
 	engine.loop(Hako::Callback<void>::make_member<Test::Framework, &Test::Framework::process>(test));
