@@ -21,7 +21,7 @@ void Hako::Win32::LoopManager::loop(Hako::Callback<void> loop_callback)
 
 		loop_callback.call();
 		Hako::singleton()->gfx_manager.render();
-		Sleep(1000 / 60);
+		Sleep(1000 / 120);
 	}
 }
 

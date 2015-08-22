@@ -90,8 +90,8 @@ namespace Hako
 			static Matrix4  make_rotation_y(const float rad);
 			static Matrix4  make_rotation_z(const float rad);
 			static Matrix4  make_rotation(const Vector3 axis, const float rad);
-			static Matrix4  make_translation(const float x, const float y, const float z);
-			static Matrix4  make_scaling(const float x, const float y, const float z);
+			static Matrix4  make_translation(const Vector3 translation);
+			static Matrix4  make_scaling(const Vector3 scale);
 			static Matrix4  make_orthographic(const float left, const float right, const float top, const float bottom, const float zNear, const float zFar);
 			static Matrix4  make_frustum(const float left, const float right, const float top, const float bottom, const float zNear, const float zFar);
 			static Matrix4  make_perspective(const float yFov, const float aspectWidthByHeight, const float zNear, const float zFar);

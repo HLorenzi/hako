@@ -76,7 +76,7 @@ namespace Hako
 				this->nodes.refresh_reference(&parent);
 				unsigned int item_position = this->find_next_sibling(parent.cached_index);
 
-				this->nodes[parent.cached_index].child_number += 1;
+				this->nodes.get_by_index(parent.cached_index).child_number += 1;
 
 				return this->nodes.insert(node, item_position);
 			}
@@ -100,16 +100,25 @@ namespace Hako
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
 				HAKO_ASSERT(index < this->count(), "index out of bounds");
-				return this->nodes[index].data;
+				return this->nodes.get_by_index(index).data;
+			}
+
+
+			unsigned int get_child_num_by_index(unsigned int index)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->count(), "index out of bounds");
+				return this->nodes.get_by_index(index).child_number;
 			}
 
 
 		protected:
 			unsigned int find_next_sibling(unsigned int index)
 			{
+				HAKO_ASSERT(index < this->count(), "index out of bounds");
 				unsigned int result = index + 1;
 				unsigned int count  = 0;
-				while (count < this->nodes[index].child_number)
+				while (count < this->nodes.get_by_index(index).child_number)
 				{
 					result = this->find_next_sibling(result);
 					count += 1;

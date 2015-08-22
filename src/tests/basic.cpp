@@ -1,5 +1,6 @@
 #include "basic.h"
 #include <hako/helper/standard_materials.h>
+#include <stdio.h>
 
 
 Hako::Error Test::Basic::init()
@@ -23,9 +24,12 @@ Hako::Error Test::Basic::init()
 
 
 	this->scene.init();
-	this->node_renderer = Hako::Gfx::SceneNode::make_renderer();
-	this->node_renderer.set_renderer_mesh(&mesh, &material);
-	this->scene.add(this->node_renderer);
+
+	this->node_rotation = this->scene.add_rotation(nullptr);
+	this->scene.set_rotation(&this->node_rotation, Hako::Math::Vector3::make(0, 0, 1), 0);
+
+	this->node_renderer = this->scene.add_renderer(&this->node_rotation);
+	this->scene.set_renderer_mesh(&this->node_renderer, &mesh, &material);
 
 
 	this->camera.init();
@@ -64,12 +68,14 @@ void Test::Basic::process()
 {
 	this->time += 0.05f;
 
-	float x = cosf(this->time) * (60 + 30 * cosf(this->time / 8.0f));
-	float y = sinf(this->time) * (60 + 30 * cosf(this->time / 8.0f));
+	float x = (60 + 30 * cosf(this->time / 8.0f));
+	float y = 0;
 	this->camera.set_lookat(
 		Hako::Math::Vector3::make(x, y, 20),
 		Hako::Math::Vector3::make(0, 0, 0),
 		Hako::Math::Vector3::make(0, 0, 1));
+
+	this->scene.set_rotation(&this->node_rotation, Hako::Math::Vector3::make(0, 0, 1), this->time);
 }
 
 

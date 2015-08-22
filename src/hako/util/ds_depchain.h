@@ -75,10 +75,6 @@ namespace Hako
 
 
 		protected:
-		#ifdef HAKO_BUILD_DEBUG
-			bool initialized;
-		#endif
-
 			Hako::DS::RefVector<Dependency>  dependency_list;
 			Hako::DS::RefVector<Exclusivity> exclusivity_list;
 		};

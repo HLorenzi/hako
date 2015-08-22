@@ -164,23 +164,23 @@ Hako::Math::Matrix4 Hako::Math::Matrix4::make_rotation(const Vector3 axis, const
 }
 
 
-Hako::Math::Matrix4 Hako::Math::Matrix4::make_translation(const float x, const float y, const float z) {
+Hako::Math::Matrix4 Hako::Math::Matrix4::make_translation(const Vector3 translation) {
 	const float cells[4][4] = {
 		{ 1, 0, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 0, 1, 0 },
-		{ x, y, z, 1 }
+		{ translation.x, translation.y, translation.z, 1 }
 	};
 
 	return Matrix4::make_array(cells);
 }
 
 
-Hako::Math::Matrix4 Hako::Math::Matrix4::make_scaling(const float x, const float y, const float z) {
+Hako::Math::Matrix4 Hako::Math::Matrix4::make_scaling(const Vector3 scale) {
 	const float cells[4][4] = {
-		{ x, 0, 0, 0 },
-		{ 0, y, 0, 0 },
-		{ 0, 0, z, 0 },
+		{ scale.x, 0, 0, 0 },
+		{ 0, scale.y, 0, 0 },
+		{ 0, 0, scale.z, 0 },
 		{ 0, 0, 0, 1 }
 	};
 
@@ -219,7 +219,7 @@ Hako::Math::Matrix4 Hako::Math::Matrix4::make_orthographic(const float left, con
 		{ -(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), 1 }
 	};
 
-	return Matrix4::make_array(cells) * Matrix4::make_scaling(1, -1, 1);
+	return Matrix4::make_array(cells) * Matrix4::make_scaling(Hako::Math::Vector3::make(1, -1, 1));
 }
 
 
@@ -232,7 +232,7 @@ Hako::Math::Matrix4 Hako::Math::Matrix4::make_frustum(const float left, const fl
 		{ 0, 0, -(2 * zFar * zNear) / (zFar - zNear), 0 }
 	};
 
-	return Matrix4::make_array(cells) * Matrix4::make_scaling(1, -1, 1);
+	return Matrix4::make_array(cells) * Matrix4::make_scaling(Hako::Math::Vector3::make(1, -1, 1));
 }
 
 

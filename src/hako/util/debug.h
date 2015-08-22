@@ -2,6 +2,9 @@
 #define HAKO_UTIL_DEBUG_H
 
 
+#include <stdio.h>
+
+
 // Suppresses unused parameter warnings.
 #define HAKO_UNUSED(varname) \
 	(void)varname

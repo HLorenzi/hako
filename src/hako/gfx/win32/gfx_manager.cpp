@@ -168,7 +168,7 @@ void Hako::Win32::GfxManager::render()
 {
 	for (unsigned int i = 0; i < this->operations.length(); i++)
 	{
-		this->operations[i]->render(0);
+		this->operations.get_by_index(i)->render(0);
 	}
     SwapBuffers(this->hdc);
 }

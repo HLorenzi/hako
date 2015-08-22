@@ -126,6 +126,13 @@ namespace Hako
 			}
 
 
+			void clear()
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				this->element_num = 0;
+			}
+
+
 			// Ensures that the vector's capacity is larger than or equal to
 			// the given value, growing the storage space if necessary.
 			void ensure_capacity(const unsigned int capacity)
@@ -133,14 +140,20 @@ namespace Hako
 				HAKO_ASSERT(this->initialized, "init() must be called before");
 				if (capacity > this->element_capacity)
 				{
+					unsigned int new_capacity = this->element_capacity;
+					if (new_capacity == 0)
+						new_capacity = 4;
+					while (new_capacity < capacity)
+						new_capacity *= 2;
+
 					this->allocator.reallocate.call(
 						(void**)&this->data,
 						sizeof(T) * this->element_capacity,
 						32,
-						sizeof(T) * capacity,
+						sizeof(T) * new_capacity,
 						32);
 
-					this->element_capacity = capacity;
+					this->element_capacity = new_capacity;
 				}
 			}
 

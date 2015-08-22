@@ -55,26 +55,26 @@ void Hako::OpenGL::RenderOperation::render(float interpolation)
 		(this->should_clear_color ? GL_COLOR_BUFFER_BIT : 0) |
 		(this->should_clear_depth ? GL_DEPTH_BUFFER_BIT : 0));
 
-	for (unsigned int i = 0; i < this->scene->tree.count(); i++)
-	{
-		Hako::Gfx::SceneNode& node = this->scene->tree.get_by_index(i);
+	this->scene->refresh_matrices(0);
+	Hako::Math::Matrix4 camera_projview = this->camera->get_matrix_projview(0);
 
-		if (node.kind == Hako::Gfx::SceneNode::Kind::Renderer)
+	for (unsigned int i = 0; i < this->scene->renderers.length(); i++)
+	{
+		Hako::Gfx::SceneRenderer& renderer = this->scene->renderers.get_by_index(i);
+
+		if (renderer.active)
 		{
-			this->bind_mesh(&node);
-			this->draw_mesh(&node);
+			this->bind_mesh(&renderer, &camera_projview);
+			this->draw_mesh(&renderer);
 		}
 	}
 }
 
 
-void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
+void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneRenderer* renderer, Hako::Math::Matrix4* camera_projview)
 {
-	Hako::OpenGL::Material* material = renderer->data.renderer.material;
-	Hako::OpenGL::Mesh* mesh         = renderer->data.renderer.mesh;
-
-	auto matrix_projview = this->camera->get_matrix_projview(0);
-	auto matrix_model    = Hako::Math::Matrix4::make_identity();
+	Hako::OpenGL::Material* material = renderer->material;
+	Hako::OpenGL::Mesh* mesh         = renderer->mesh;
 
 	glUseProgram(material->gl_shader_program);
 
@@ -98,17 +98,17 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
 		glVertexAttribPointer(material->attrib_texcoord, Hako::Gfx::mesh_data_bit_to_elem_num(Hako::Gfx::MeshData::TexCoord), GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
-	glUniformMatrix4fv(material->uniform_matrix_projview, 1, GL_FALSE, (GLfloat*)matrix_projview.cell);
-	glUniformMatrix4fv(material->uniform_matrix_model,    1, GL_FALSE, (GLfloat*)matrix_model.cell);
+	glUniformMatrix4fv(material->uniform_matrix_projview, 1, GL_FALSE, (GLfloat*)camera_projview->cell);
+	glUniformMatrix4fv(material->uniform_matrix_model,    1, GL_FALSE, (GLfloat*)renderer->transform_matrix.cell);
 
 	material->set_render_state();
 	HAKO_OPENGL_CHECKERROR();
 }
 
 
-void Hako::OpenGL::RenderOperation::draw_mesh(Hako::Gfx::SceneNode* renderer)
+void Hako::OpenGL::RenderOperation::draw_mesh(Hako::Gfx::SceneRenderer* renderer)
 {
-	Hako::OpenGL::Mesh* mesh = renderer->data.renderer.mesh;
+	Hako::OpenGL::Mesh* mesh = renderer->mesh;
 	glDrawRangeElements(GL_TRIANGLES, 0, mesh->index_num, mesh->index_num, GL_UNSIGNED_INT, (void*)0);
 	HAKO_OPENGL_CHECKERROR();
 }

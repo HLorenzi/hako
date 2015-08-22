@@ -11,8 +11,17 @@ namespace Hako
 {
 	namespace Gfx
 	{
+		class Scene;
+		class SceneRenderer;
+
+
 		class SceneNode
 		{
+			friend Hako::Gfx::RenderOperation;
+			friend Hako::Gfx::Scene;
+			friend Hako::Gfx::SceneRenderer;
+
+
 		public:
 			enum class Kind
 			{
@@ -21,32 +30,18 @@ namespace Hako
 			};
 
 
-			static SceneNode make_renderer();
-			static SceneNode make_translation();
-			static SceneNode make_rotation();
-			static SceneNode make_scaling();
-			static SceneNode make_custom_transform();
-
-			void set_renderer_mesh    (Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material);
-			void set_renderer_options (int layer, unsigned int mask);
-			void set_translation      (Hako::Math::Vector3 position);
-			void lerp_translation     (Hako::Math::Vector3 position);
-			void set_rotation         (Hako::Math::Vector3 axis, float angle);
-			void lerp_rotation        (Hako::Math::Vector3 axis, float angle);
-			void set_scaling          (Hako::Math::Vector3 scale);
-			void lerp_scaling         (Hako::Math::Vector3 scale);
-			void set_custom_transform (Hako::Math::Matrix4 matrix);
+			static SceneNode make(Kind kind);
 
 
+		protected:
+			bool active;
+			bool dirty;
 			Kind kind;
 			union
 			{
 				struct
 				{
-					Hako::Gfx::Mesh*     mesh;
-					Hako::Gfx::Material* material;
-					int                  layer;
-					unsigned int         mask;
+					Hako::DS::RefVector<SceneRenderer>::Reference renderer_reference;
 				} renderer;
 
                 struct
@@ -73,6 +68,24 @@ namespace Hako
 		};
 
 
+		class SceneRenderer
+		{
+			friend Hako::Gfx::RenderOperation;
+			friend Hako::Gfx::Scene;
+			friend Hako::Gfx::SceneNode;
+
+
+		protected:
+			bool                                     active;
+			Hako::Math::Matrix4                      transform_matrix;
+			Hako::DS::FlatTree<SceneNode>::Reference tree_reference;
+			Hako::Gfx::Mesh*                         mesh;
+			Hako::Gfx::Material*                     material;
+			int                                      layer;
+			unsigned int                             mask;
+		};
+
+
 		class Scene
 		{
 			friend Hako::Gfx::RenderOperation;
@@ -81,15 +94,43 @@ namespace Hako
 		public:
 			typedef Hako::DS::FlatTree<SceneNode>::Reference Reference;
 
+
 			Scene();
 			void init();
 
-			Reference add       (SceneNode node);
-			Reference add_child (Reference& parent, SceneNode node);
+			Reference add_renderer         (Reference* parent);
+			Reference add_translation      (Reference* parent);
+			Reference add_rotation         (Reference* parent);
+			Reference add_scaling          (Reference* parent);
+			Reference add_custom_transform (Reference* parent);
+
+			void set_active           (Reference* parent, bool active);
+			void set_renderer_mesh    (Reference* parent, Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material);
+			void set_renderer_options (Reference* parent, int layer, unsigned int mask);
+			void set_translation      (Reference* parent, Hako::Math::Vector3 position);
+			void lerp_translation     (Reference* parent, Hako::Math::Vector3 position);
+			void set_rotation         (Reference* parent, Hako::Math::Vector3 axis, float angle);
+			void lerp_rotation        (Reference* parent, Hako::Math::Vector3 axis, float angle);
+			void set_scaling          (Reference* parent, Hako::Math::Vector3 scale);
+			void lerp_scaling         (Reference* parent, Hako::Math::Vector3 scale);
+			void set_custom_transform (Reference* parent, Hako::Math::Matrix4 matrix);
+
+			void refresh_matrices(float interpolation);
 
 
 		protected:
-			Hako::DS::FlatTree<SceneNode> tree;
+			Reference add(Reference* parent, SceneNode node);
+
+
+			unsigned int refresh_matrices_recursive(
+				float               interpolation,
+				unsigned int        node_index,
+				Hako::Math::Matrix4 cur_matrix,
+				bool                dirty);
+
+
+			Hako::DS::FlatTree<SceneNode>      tree;
+			Hako::DS::RefVector<SceneRenderer> renderers;
 		};
 	}
 }

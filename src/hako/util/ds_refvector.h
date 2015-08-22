@@ -45,6 +45,12 @@ namespace Hako
 				}
 
 
+				bool is_valid()
+				{
+					return (!this->is_invalid());
+				}
+
+
 				IdentifierType item_identifier;
 				unsigned int   cached_index;
 			};
@@ -87,7 +93,7 @@ namespace Hako
 			Reference insert(T data, unsigned int before_position)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
-				HAKO_ASSERT(before_position < this->length(), "index out of bounds");
+				HAKO_ASSERT(before_position <= this->length(), "index out of bounds");
 
 				this->items.insert(data, before_position);
 				this->identifiers.insert(this->get_next_identifier(), before_position);
@@ -114,20 +120,20 @@ namespace Hako
 			}
 
 
-			T& operator [] (unsigned int index)
-			{
-				HAKO_ASSERT(this->initialized, "init() must be called before");
-				HAKO_ASSERT(index < this->length(), "index out of bounds");
-				return this->items[index];
-			}
-
-
 			T& operator [] (Reference& refer)
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");
 				HAKO_ASSERT(refer.item_identifier != 0, "trying to access null reference");
 				this->refresh_reference(&refer);
 				return this->items[refer.cached_index];
+			}
+
+
+			T& get_by_index(unsigned int index)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->length(), "index out of bounds");
+				return this->items[index];
 			}
 
 

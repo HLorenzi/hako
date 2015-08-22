@@ -23,8 +23,8 @@ namespace Hako
 			Hako::Error internal_generate() override;
 			void        internal_destroy() override;
 
-			void bind_mesh(Hako::Gfx::SceneNode* renderer);
-			void draw_mesh(Hako::Gfx::SceneNode* renderer);
+			void bind_mesh(Hako::Gfx::SceneRenderer* renderer, Hako::Math::Matrix4* camera_projview);
+			void draw_mesh(Hako::Gfx::SceneRenderer* renderer);
 
 
 			GLuint gl_framebuffer;

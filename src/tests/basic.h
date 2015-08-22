@@ -21,8 +21,9 @@ namespace Test
 		Hako::Gfx::Mesh        mesh;
 		Hako::Gfx::Material    material;
 
-		Hako::Gfx::Scene       scene;
-		Hako::Gfx::SceneNode   node_renderer;
+		Hako::Gfx::Scene            scene;
+		Hako::Gfx::Scene::Reference node_rotation;
+		Hako::Gfx::Scene::Reference node_renderer;
 
 		Hako::Gfx::Camera      camera;
 		Hako::Gfx::FrameBuffer color_buffer;
