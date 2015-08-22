@@ -25,7 +25,7 @@ namespace Hako
 			void internal_init        () override;
 			void internal_set_data    (int data_bit, unsigned int start, unsigned int count, float* data) override;
 			void internal_set_indices (unsigned int start, unsigned int count, unsigned int* indices) override;
-
+			void internal_destroy     () override;
 
 			GLuint gl_data_buffers[3];
 			GLuint gl_index_buffer;

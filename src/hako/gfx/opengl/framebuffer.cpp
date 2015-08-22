@@ -29,10 +29,14 @@ Hako::Error Hako::OpenGL::FrameBuffer::internal_generate()
 		return Hako::Error::unsupported();
 	}
 
-	if (HAKO_OPENGL_CHECKERROR())
-		return Hako::Error::unknown();
-
+	HAKO_OPENGL_CHECKERROR();
 	return Hako::Error::ok();
+}
+
+
+void Hako::OpenGL::FrameBuffer::internal_destroy()
+{
+
 }
 
 

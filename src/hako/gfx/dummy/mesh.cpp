@@ -14,7 +14,7 @@ Hako::Dummy::Gfx::Mesh::Mesh()
 
 Hako::Dummy::Gfx::Mesh::~Mesh()
 {
-
+	HAKO_ASSERT(!this->generated, "possible resource leak; destroy() was not called");
 }
 
 
@@ -64,4 +64,15 @@ Hako::Error Hako::Dummy::Gfx::Mesh::generate()
 #endif
 
 	return err;
+}
+
+
+void Hako::Dummy::Gfx::Mesh::destroy()
+{
+	HAKO_ASSERT(this->initialized, "init() has not been called");
+	HAKO_ASSERT(this->generated, "generate() has not been called");
+	this->internal_destroy();
+#ifdef HAKO_BUILD_DEBUG
+	this->generated = false;
+#endif
 }

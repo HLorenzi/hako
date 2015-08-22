@@ -23,10 +23,16 @@ namespace Hako
 
 		public:
 			void set_shader_sources(const char* vertex_src, const char* pixel_src);
+			void set_depth_test(bool use, GLenum func);
+			void set_blending(bool use, GLenum src, GLenum dest);
+			void set_culling(Hako::Gfx::CullFunc func);
+			void set_render_state();
 
 
 		protected:
+			void        internal_init() override;
 			Hako::Error internal_generate() override;
+			void        internal_destroy() override;
 
 
 			void* vertex_shader_source;
@@ -43,6 +49,12 @@ namespace Hako
 
 			GLint uniform_matrix_projview;
 			GLint uniform_matrix_model;
+
+			bool use_depth_test;
+			GLenum depth_test_func;
+			bool use_blending;
+			GLenum blending_src, blending_dest;
+			Hako::Gfx::CullFunc culling_func;
 		};
 	}
 }

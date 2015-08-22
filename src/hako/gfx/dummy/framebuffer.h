@@ -21,12 +21,17 @@ namespace Hako
 				void init            ();
 				void set_dimensions  (unsigned int width, unsigned int height);
 				void set_format      (Hako::Gfx::FrameBufferFormat format);
+
 				Hako::Error generate ();
+				void        destroy  ();
 
 
 			protected:
 				virtual Hako::Error internal_generate()
 					{ return Hako::Error::ok(); }
+
+				virtual void internal_destroy()
+					{ }
 
 
 			#ifdef HAKO_BUILD_DEBUG

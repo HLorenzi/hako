@@ -24,6 +24,7 @@ namespace Hako
 				void set_indices (unsigned int start, unsigned int count, unsigned int* indices);
 
 				Hako::Error generate();
+				void        destroy();
 
 
 			protected:
@@ -32,6 +33,9 @@ namespace Hako
 
 				virtual Hako::Error internal_generate()
 					{ return Hako::Error::ok(); }
+
+				virtual void internal_destroy()
+					{ }
 
 				virtual void internal_set_data(int data_bit, unsigned int start, unsigned int count, float* data)
 				{

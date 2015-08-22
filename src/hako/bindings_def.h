@@ -14,6 +14,7 @@
 
 
 #include <hako/gfx/mesh.h>
+#include <hako/gfx/material.h>
 #include <hako/gfx/scene.h>
 #include <hako/gfx/camera.h>
 #include <hako/gfx/framebuffer.h>

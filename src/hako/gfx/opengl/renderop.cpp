@@ -30,7 +30,10 @@ Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	if (HAKO_OPENGL_CHECKERROR())
+	{
+		HAKO_WARNING("opengl framebuffer creation error");
 		return Hako::Error::unknown();
+	}
 
 	return Hako::Error::ok();
 }
@@ -97,6 +100,8 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneNode* renderer)
 
 	glUniformMatrix4fv(material->uniform_matrix_projview, 1, GL_FALSE, (GLfloat*)matrix_projview.cell);
 	glUniformMatrix4fv(material->uniform_matrix_model,    1, GL_FALSE, (GLfloat*)matrix_model.cell);
+
+	material->set_render_state();
 	HAKO_OPENGL_CHECKERROR();
 }
 
@@ -108,5 +113,10 @@ void Hako::OpenGL::RenderOperation::draw_mesh(Hako::Gfx::SceneNode* renderer)
 	HAKO_OPENGL_CHECKERROR();
 }
 
+
+void Hako::OpenGL::RenderOperation::internal_destroy()
+{
+	glDeleteFramebuffers(1, &this->gl_framebuffer);
+}
 
 #endif

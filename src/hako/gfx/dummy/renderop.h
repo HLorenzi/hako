@@ -26,11 +26,15 @@ namespace Hako
 				void set_clear_depth(float depth);
 
 				Hako::Error generate();
+				void        destroy();
 
 
 			protected:
 				virtual Hako::Error internal_generate()
 					{ return Hako::Error::ok(); }
+
+				virtual void internal_destroy()
+					{ }
 
 
 			#ifdef HAKO_BUILD_DEBUG

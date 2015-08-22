@@ -2,6 +2,7 @@
 
 
 #include <hako/gfx/opengl/material.h>
+#include <hako/gfx/material.h>
 #include <hako/util/debug.h>
 #include <stdio.h>
 
@@ -31,6 +32,14 @@ namespace
 }
 
 
+void Hako::OpenGL::Material::internal_init()
+{
+	this->use_depth_test = false;
+	this->use_blending   = false;
+	this->culling_func   = Hako::Gfx::CullFunc::NoCull;
+}
+
+
 void Hako::OpenGL::Material::set_shader_sources(const char* vertex_src, const char* pixel_src)
 {
 	HAKO_ASSERT(this->initialized, "init() must be called before");
@@ -38,6 +47,65 @@ void Hako::OpenGL::Material::set_shader_sources(const char* vertex_src, const ch
 	HAKO_ASSERT(pixel_src != nullptr, "pixel source must not be null");
 	this->vertex_shader_source = static_cast<void*>(const_cast<char*>(vertex_src));
 	this->pixel_shader_source  = static_cast<void*>(const_cast<char*>(pixel_src));
+}
+
+
+void Hako::OpenGL::Material::set_depth_test(bool use, GLenum func)
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	this->use_depth_test  = use;
+	this->depth_test_func = func;
+}
+
+
+void Hako::OpenGL::Material::set_blending(bool use, GLenum src, GLenum dest)
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	this->use_blending  = use;
+	this->blending_src  = src;
+	this->blending_dest = dest;
+}
+
+
+void Hako::OpenGL::Material::set_culling(Hako::Gfx::CullFunc func)
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	this->culling_func = func;
+}
+
+
+void Hako::OpenGL::Material::set_render_state()
+{
+	if (this->use_depth_test)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(this->depth_test_func);
+	}
+	else
+		glDisable(GL_DEPTH_TEST);
+
+
+	if (this->use_blending)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(this->blending_src, this->blending_dest);
+	}
+	else
+		glDisable(GL_BLEND);
+
+
+	if (this->culling_func != Hako::Gfx::CullFunc::NoCull)
+	{
+		glEnable(GL_CULL_FACE);
+		switch (this->culling_func)
+		{
+			case Hako::Gfx::CullFunc::Clockwise:        glCullFace(GL_FRONT); break;
+			case Hako::Gfx::CullFunc::CounterClockwise: glCullFace(GL_BACK); break;
+			default: HAKO_WARNING("unimplemented"); break;
+		}
+	}
+	else
+		glDisable(GL_CULL_FACE);
 }
 
 
@@ -72,6 +140,14 @@ Hako::Error Hako::OpenGL::Material::internal_generate()
 
 	HAKO_OPENGL_CHECKERROR();
 	return Hako::Error::ok();
+}
+
+
+void Hako::OpenGL::Material::internal_destroy()
+{
+	glDeleteShader(this->gl_vertex_shader);
+	glDeleteShader(this->gl_pixel_shader);
+	glDeleteProgram(this->gl_shader_program);
 }
 
 

@@ -23,6 +23,7 @@ namespace Hako
 
 		protected:
 			Hako::Error internal_generate() override;
+			void        internal_destroy() override;
 
 
 			GLuint gl_buffer;

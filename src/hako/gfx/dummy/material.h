@@ -18,12 +18,20 @@ namespace Hako
 				Material();
 				~Material();
 				void init();
+
 				Hako::Error generate();
+				void        destroy();
 
 
 			protected:
+				virtual void internal_init()
+					{ }
+
 				virtual Hako::Error internal_generate()
 					{ return Hako::Error::ok(); }
+
+				virtual void internal_destroy()
+					{ }
 
 
 			#ifdef HAKO_BUILD_DEBUG

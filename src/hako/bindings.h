@@ -72,6 +72,9 @@ namespace Hako
 		class Scene;
 		class SceneNode;
 		class Camera;
+		enum class DepthTestFunc;
+		enum class BlendFunc;
+		enum class CullFunc;
 
 
 		#ifdef HAKO_MODULE_GFX_OPENGL

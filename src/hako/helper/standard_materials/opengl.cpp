@@ -5,7 +5,57 @@
 #include <hako/bindings_def.h>
 
 
-void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* material)
+namespace
+{
+	void set_options(Hako::Gfx::Material* material, Hako::Helper::StandardMaterials::Options options)
+	{
+		if (options.use_depth_test)
+		{
+			GLenum func = GL_ALWAYS;
+			switch (options.depth_test_func)
+			{
+				case Hako::Gfx::DepthTestFunc::Always:         func = GL_ALWAYS; break;
+				case Hako::Gfx::DepthTestFunc::Less:           func = GL_LESS; break;
+				case Hako::Gfx::DepthTestFunc::LessOrEqual:    func = GL_LEQUAL; break;
+				case Hako::Gfx::DepthTestFunc::Equal:          func = GL_EQUAL; break;
+				case Hako::Gfx::DepthTestFunc::Greater:        func = GL_GREATER; break;
+				case Hako::Gfx::DepthTestFunc::GreaterOrEqual: func = GL_GEQUAL; break;
+				default: HAKO_WARNING("unimplemented"); break;
+			}
+			material->set_depth_test(true, func);
+		}
+		else
+			material->set_depth_test(false, GL_ALWAYS);
+
+
+		if (options.use_blending)
+		{
+			GLenum src = GL_SRC_ALPHA;
+			GLenum dest = GL_ONE_MINUS_SRC_ALPHA;
+			switch (options.blending_func)
+			{
+				case Hako::Gfx::BlendFunc::Normal:
+					src  = GL_SRC_ALPHA;
+					dest = GL_ONE_MINUS_SRC_ALPHA;
+					break;
+				case Hako::Gfx::BlendFunc::Additive:
+					src  = GL_SRC_ALPHA;
+					dest = GL_ONE;
+					break;
+				default: HAKO_WARNING("unimplemented"); break;
+			}
+			material->set_blending(true, src, dest);
+		}
+		else
+			material->set_blending(false, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+		material->set_culling(options.culling_func);
+	}
+}
+
+
+void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* material, Hako::Helper::StandardMaterials::Options options)
 {
 	material->init();
 
@@ -30,11 +80,12 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 		"}";
 
 	material->set_shader_sources(vertex_src, pixel_src);
+	set_options(material, options);
 	material->generate();
 }
 
 
-void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Material* material)
+void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Material* material, Hako::Helper::StandardMaterials::Options options)
 {
 	// FIXME: Incomplete shader program.
 
@@ -65,6 +116,7 @@ void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Mater
 		"}";
 
 	material->set_shader_sources(vertex_src, pixel_src);
+	set_options(material, options);
 	material->generate();
 }
 

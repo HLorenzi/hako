@@ -49,4 +49,17 @@ void Hako::OpenGL::Mesh::internal_set_indices(unsigned int start, unsigned int c
 }
 
 
+void Hako::OpenGL::Mesh::internal_destroy()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		int bit = (1 << i);
+		if ((this->data_bitfield & bit) != 0)
+			glDeleteBuffers(1, &this->gl_data_buffers[i]);
+	}
+	glDeleteBuffers(1, &this->gl_index_buffer);
+	HAKO_OPENGL_CHECKERROR();
+}
+
+
 #endif
