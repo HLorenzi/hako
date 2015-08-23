@@ -8,7 +8,7 @@ Hako::Error Test::Basic::init()
 	this->mesh.init(6, 6, Hako::Gfx::MeshData::Position | Hako::Gfx::MeshData::Color | Hako::Gfx::MeshData::TexCoord);
 	float mesh_positions[]      = { -10, -15, 0,  10, -15, 0,  0, 15, 0,      -15, 0, 15,     15, 0, 15,      0, 0, -15 };
 	float mesh_colors[]         = { 1, 0, 0, 1,   0, 1, 0, 1,  0, 0, 1, 1,    0.5f, 0, 0, 1,  0, 0.5f, 0, 1,  0, 0, 0.5f, 1 };
-	float mesh_texcoords[]      = { 0, 0,         10, 0,       10, 10,        0, 0,           10, 0,          10, 10 };
+	float mesh_texcoords[]      = { 0, 0,         10, 0,       5, 10,         0, 0,           10, 0,          5, 10 };
 	unsigned int mesh_indices[] = { 0,            1,           2,             3,              4,              5 };
 	this->mesh.set_data(Hako::Gfx::MeshData::Position, 0, 6, mesh_positions);
 	this->mesh.set_data(Hako::Gfx::MeshData::Color,    0, 6, mesh_colors);

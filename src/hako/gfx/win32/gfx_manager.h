@@ -29,6 +29,9 @@ namespace Hako
 
 
 		protected:
+			void set_window_size();
+
+
 			// Win32 handle to the main window.
 			HWND   hwnd;
 			// Win32 handles to the render context.
@@ -36,6 +39,9 @@ namespace Hako
 			HGLRC  hrc;
 			// Flag for whether the user closed the window.
 			bool   user_quit;
+
+			// Window client size.
+			unsigned int window_width, window_height;
 
 
 			// Window callback function used by Win32.

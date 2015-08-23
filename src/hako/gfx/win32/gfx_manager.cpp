@@ -50,6 +50,7 @@ Hako::Error Hako::Win32::GfxManager::show()
 		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		960, 544, NULL, NULL, module_handle, NULL);
 
+	SetWindowLongPtr(this->hwnd, GWL_USERDATA, (LONG_PTR)this);
 	ShowWindow(this->hwnd, true);
 
 	this->opengl_enable(this->hwnd, &this->hdc, &this->hrc);
@@ -61,6 +62,9 @@ Hako::Error Hako::Win32::GfxManager::show()
 	glClear(GL_COLOR_BUFFER_BIT);
     SwapBuffers(this->hdc);
 
+	this->set_window_size();
+	glViewport(0, 0, this->window_width, this->window_height);
+
 	return Hako::Error::ok();
 }
 
@@ -70,6 +74,15 @@ Hako::Error Hako::Win32::GfxManager::shutdown()
 	this->opengl_disable(this->hwnd, this->hdc, this->hrc);
 	CloseWindow(this->hwnd);
 	return Hako::Error::ok();
+}
+
+
+void Hako::Win32::GfxManager::set_window_size()
+{
+	RECT rect;
+	GetClientRect(this->hwnd, &rect);
+	this->window_width  = rect.right;
+	this->window_height = rect.bottom;
 }
 
 
@@ -113,6 +126,15 @@ LRESULT CALLBACK Hako::Win32::GfxManager::window_callback(HWND hwnd, UINT uMsg, 
 
 		case WM_DESTROY:
 			return 0;
+
+		case WM_SIZE:
+		{
+			Hako::Win32::GfxManager* gfx_manager =
+				(Hako::Win32::GfxManager*)GetWindowLongPtr(hwnd, GWL_USERDATA);
+			gfx_manager->set_window_size();
+			glViewport(0, 0, gfx_manager->window_width, gfx_manager->window_height);
+			break;
+		}
 
 		case WM_KEYDOWN:
 		{
