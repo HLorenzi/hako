@@ -81,6 +81,7 @@ namespace Hako
 			Hako::DS::FlatTree<SceneNode>::Reference tree_reference;
 			Hako::Gfx::Mesh*                         mesh;
 			Hako::Gfx::Material*                     material;
+			Hako::Gfx::MaterialProperties*           properties;
 			int                                      layer;
 			unsigned int                             mask;
 		};
@@ -105,7 +106,7 @@ namespace Hako
 			Reference add_custom_transform (Reference* parent);
 
 			void set_active           (Reference* parent, bool active);
-			void set_renderer_mesh    (Reference* parent, Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material);
+			void set_renderer_mesh    (Reference* parent, Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material, Hako::Gfx::MaterialProperties* properties);
 			void set_renderer_options (Reference* parent, int layer, unsigned int mask);
 			void set_translation      (Reference* parent, Hako::Math::Vector3 position);
 			void lerp_translation     (Reference* parent, Hako::Math::Vector3 position);

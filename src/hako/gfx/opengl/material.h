@@ -7,6 +7,7 @@
 
 #include <hako/gfx/dummy/material.h>
 #include <hako/gfx/opengl/includes.h>
+#include <hako/util/ds_vector.h>
 
 
 namespace Hako
@@ -22,6 +23,15 @@ namespace Hako
 
 
 		public:
+			class Uniform
+			{
+			public:
+				const char* name;
+				const char* gl_uniform_name;
+				GLint       gl_location;
+			};
+
+
 			void set_shader_sources(const char* vertex_src, const char* pixel_src);
 			void set_depth_test(bool use, GLenum func);
 			void set_blending(bool use, GLenum src, GLenum dest);
@@ -30,6 +40,9 @@ namespace Hako
 
 			unsigned int get_texture_slot_num() override;
 			int get_texture_slot(const char* name) override;
+
+
+			Hako::DS::Vector<Uniform> uniform_textures;
 
 
 		protected:

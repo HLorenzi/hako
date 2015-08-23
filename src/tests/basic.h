@@ -18,8 +18,10 @@ namespace Test
 	protected:
 		float time;
 
-		Hako::Gfx::Mesh        mesh;
-		Hako::Gfx::Material    material;
+		Hako::Gfx::Mesh               mesh;
+		Hako::Gfx::Texture            texture;
+		Hako::Gfx::Material           material;
+		Hako::Gfx::MaterialProperties properties;
 
 		Hako::Gfx::Scene            scene;
 		Hako::Gfx::Scene::Reference node_rotation;

@@ -1,4 +1,5 @@
 #include <hako/gfx/matproperties.h>
+#include <hako/bindings_def.h>
 
 
 Hako::Gfx::MaterialProperties::MaterialProperties()
@@ -27,7 +28,7 @@ void Hako::Gfx::MaterialProperties::init()
 	this->slots_matrix  .init();
 	this->slots_texture .init();
 #ifdef HAKO_BUILD_DEBUG
-	this->initialized = false;
+	this->initialized = true;
 #endif
 }
 
@@ -45,6 +46,9 @@ void Hako::Gfx::MaterialProperties::set_material(Hako::Gfx::Material* material)
 {
 	HAKO_ASSERT(this->initialized, "init() must be called before");
 	this->material = material;
+	this->slots_texture.set_length(this->material->get_texture_slot_num());
+	for (unsigned int i = 0; i < this->slots_texture.length(); i++)
+		this->slots_texture[i].used = false;
 #ifdef HAKO_BUILD_DEBUG
 	this->bound = true;
 #endif

@@ -5,6 +5,7 @@
 #include <hako/gfx/material.h>
 #include <hako/util/debug.h>
 #include <stdio.h>
+#include <string.h>
 
 
 namespace
@@ -37,6 +38,7 @@ void Hako::OpenGL::Material::internal_init()
 	this->use_depth_test = false;
 	this->use_blending   = false;
 	this->culling_func   = Hako::Gfx::CullFunc::NoCull;
+	this->uniform_textures.init();
 }
 
 
@@ -133,6 +135,14 @@ Hako::Error Hako::OpenGL::Material::internal_generate()
 	this->uniform_matrix_projview = glGetUniformLocation(this->gl_shader_program, "matrix_projview");
 	this->uniform_matrix_model    = glGetUniformLocation(this->gl_shader_program, "matrix_model");
 
+	for (unsigned int i = 0; i < this->uniform_textures.length(); i++)
+	{
+		this->uniform_textures[i].gl_location =
+			glGetUniformLocation(this->gl_shader_program, this->uniform_textures[i].gl_uniform_name);
+
+		HAKO_ASSERT(this->uniform_textures[i].gl_location >= 0, "could not bind a texture uniform");
+	}
+
 	HAKO_ASSERT(this->attrib_position >= 0,         "could not bind in_position attribute");
 	HAKO_ASSERT(this->uniform_matrix_projview >= 0, "could not bind matrix_projview uniform");
 	HAKO_ASSERT(this->uniform_matrix_model >= 0,    "could not bind matrix_model uniform");
@@ -148,6 +158,24 @@ void Hako::OpenGL::Material::internal_destroy()
 	glDeleteShader(this->gl_vertex_shader);
 	glDeleteShader(this->gl_pixel_shader);
 	glDeleteProgram(this->gl_shader_program);
+}
+
+
+unsigned int Hako::OpenGL::Material::get_texture_slot_num()
+{
+	return this->uniform_textures.length();
+}
+
+
+int Hako::OpenGL::Material::get_texture_slot(const char* name)
+{
+	for (unsigned int i = 0; i < this->uniform_textures.length(); i++)
+	{
+		if (strcmp(name, this->uniform_textures[i].name) == 0)
+			return i;
+	}
+
+	return -1;
 }
 
 

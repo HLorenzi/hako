@@ -13,6 +13,9 @@ namespace Hako
 	{
 		class MaterialProperties
 		{
+			friend Hako::Gfx::RenderOperation;
+
+
 		public:
 			MaterialProperties();
 			~MaterialProperties();

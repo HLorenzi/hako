@@ -7,9 +7,9 @@
 
 void Hako::OpenGL::Mesh::internal_init()
 {
-	HAKO_ASSERT((data_bitfield & (~0x7)) == 0, "some data fields not implemented");
+	HAKO_ASSERT((data_bitfield & (~0xf)) == 0, "some data fields not implemented");
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < DATA_BUFFER_NUM; i++)
 	{
 		int bit = (1 << i);
 		if ((this->data_bitfield & bit) != 0)
@@ -51,7 +51,7 @@ void Hako::OpenGL::Mesh::internal_set_indices(unsigned int start, unsigned int c
 
 void Hako::OpenGL::Mesh::internal_destroy()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < DATA_BUFFER_NUM; i++)
 	{
 		int bit = (1 << i);
 		if ((this->data_bitfield & bit) != 0)

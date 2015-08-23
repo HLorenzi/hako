@@ -5,12 +5,14 @@
 
 Hako::Error Test::Basic::init()
 {
-	this->mesh.init(6, 6, Hako::Gfx::MeshData::Position | Hako::Gfx::MeshData::Color);
-	float mesh_positions[]      = { -15, -15, 0,  15, 0, 0,    0, 15, 0,      -15,0,10, 15,0,10, 0,0,-10 };
-	float mesh_colors[]         = { 1, 0, 0, 1,   0, 1, 0, 1,  0, 0, 1, 1,    0.5f,0,0,1, 0.5f,0.5f,0,1, 0.5f,0.5f,0.5f,1 };
-	unsigned int mesh_indices[] = { 0,            1,           2,             3, 4, 5 };
+	this->mesh.init(6, 6, Hako::Gfx::MeshData::Position | Hako::Gfx::MeshData::Color | Hako::Gfx::MeshData::TexCoord);
+	float mesh_positions[]      = { -10, -15, 0,  10, -15, 0,  0, 15, 0,      -15, 0, 15,     15, 0, 15,      0, 0, -15 };
+	float mesh_colors[]         = { 1, 0, 0, 1,   0, 1, 0, 1,  0, 0, 1, 1,    0.5f, 0, 0, 1,  0, 0.5f, 0, 1,  0, 0, 0.5f, 1 };
+	float mesh_texcoords[]      = { 0, 0,         10, 0,       10, 10,        0, 0,           10, 0,          10, 10 };
+	unsigned int mesh_indices[] = { 0,            1,           2,             3,              4,              5 };
 	this->mesh.set_data(Hako::Gfx::MeshData::Position, 0, 6, mesh_positions);
 	this->mesh.set_data(Hako::Gfx::MeshData::Color,    0, 6, mesh_colors);
+	this->mesh.set_data(Hako::Gfx::MeshData::TexCoord, 0, 6, mesh_texcoords);
 	this->mesh.set_indices(0, 6, mesh_indices);
 	this->mesh.generate();
 
@@ -20,7 +22,22 @@ Hako::Error Test::Basic::init()
 	options.set_depth_test(Hako::Gfx::DepthTestFunc::Less);
 	options.set_blending(Hako::Gfx::BlendFunc::Additive);
 	options.set_culling(Hako::Gfx::CullFunc::NoCull);
-	Hako::Helper::StandardMaterials::make_basic_color(&this->material, options);
+	Hako::Helper::StandardMaterials::make_basic_textured_color(&this->material, options);
+
+
+	unsigned char texture_pixels[] = {
+		255, 255, 255, 255,   128, 128, 128, 255,
+		128, 128, 128, 255,   255, 255, 255, 255};
+	this->texture.init();
+	this->texture.set_2d(2, 2, 1);
+	this->texture.set_format(Hako::Gfx::TextureFormat::LinearRGBA8);
+	this->texture.set_data(0, 0, texture_pixels);
+	this->texture.generate();
+
+
+	this->properties.init();
+	this->properties.set_material(&this->material);
+	this->properties.set_texture(this->material.get_texture_slot("main_texture"), &this->texture);
 
 
 	this->scene.init();
@@ -29,7 +46,7 @@ Hako::Error Test::Basic::init()
 	this->scene.set_rotation(&this->node_rotation, Hako::Math::Vector3::make(0, 0, 1), 0);
 
 	this->node_renderer = this->scene.add_renderer(&this->node_rotation);
-	this->scene.set_renderer_mesh(&this->node_renderer, &mesh, &material);
+	this->scene.set_renderer_mesh(&this->node_renderer, &this->mesh, &this->material, &this->properties);
 
 
 	this->camera.init();
@@ -66,7 +83,7 @@ Hako::Error Test::Basic::init()
 
 void Test::Basic::process()
 {
-	this->time += 0.05f;
+	this->time += 0.01f;
 
 	float x = (60 + 30 * cosf(this->time / 8.0f));
 	float y = 0;
@@ -84,6 +101,8 @@ void Test::Basic::shutdown()
 	Hako::singleton()->gfx_manager.remove_operation(this->renderop_ref);
 	this->renderop    .destroy();
 	this->color_buffer.destroy();
+	this->properties  .destroy();
 	this->material    .destroy();
+	this->texture     .destroy();
 	this->mesh        .destroy();
 }

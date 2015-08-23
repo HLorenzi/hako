@@ -59,7 +59,7 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 {
 	material->init();
 
-	auto vertex_src =
+	const char* vertex_src =
 		"#version 330                                                           \n"
 		"in vec3 in_position;                                                   \n"
 		"in vec4 in_color;                                                      \n"
@@ -71,7 +71,7 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 		"  varying_color = in_color;                                            \n"
 		"}";
 
-	auto pixel_src =
+	const char* pixel_src =
 		"#version 330                 \n"
 		"out vec4 out_color;          \n"
 		"varying vec4 varying_color;  \n"
@@ -87,11 +87,9 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 
 void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Material* material, Hako::Helper::StandardMaterials::Options options)
 {
-	// FIXME: Incomplete shader program.
-
 	material->init();
 
-	auto vertex_src =
+	const char* vertex_src =
 		"#version 330                                                           \n"
 		"in vec3 in_position;                                                   \n"
 		"in vec4 in_color;                                                      \n"
@@ -106,16 +104,20 @@ void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Mater
 		"  varying_texcoord = in_texcoord;                                      \n"
 		"}";
 
-	auto pixel_src =
-		"#version 330                  \n"
-		"out vec4 out_color;           \n"
-		"varying vec4 varying_color;   \n"
-		"varying vec2 varying_texcoord \n"
-		"void main() {                 \n"
-		"  out_color = varying_color;  \n"
+	const char* pixel_src =
+		"#version 330                                                                \n"
+		"out vec4 out_color;                                                         \n"
+		"uniform sampler2D uniform_texture;                                          \n"
+		"varying vec4 varying_color;                                                 \n"
+		"varying vec2 varying_texcoord;                                              \n"
+		"void main() {                                                               \n"
+		"  out_color = varying_color * texture2D(uniform_texture, varying_texcoord); \n"
 		"}";
 
 	material->set_shader_sources(vertex_src, pixel_src);
+	material->uniform_textures.set_length(1);
+	material->uniform_textures[0].name            = "main_texture";
+	material->uniform_textures[0].gl_uniform_name = "uniform_texture";
 	set_options(material, options);
 	material->generate();
 }

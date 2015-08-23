@@ -27,7 +27,8 @@ namespace Hako
 			void internal_set_indices (unsigned int start, unsigned int count, unsigned int* indices) override;
 			void internal_destroy     () override;
 
-			GLuint gl_data_buffers[3];
+			static const int DATA_BUFFER_NUM = 4;
+			GLuint gl_data_buffers[DATA_BUFFER_NUM];
 			GLuint gl_index_buffer;
 		};
 	}

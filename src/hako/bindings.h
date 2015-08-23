@@ -78,6 +78,10 @@ namespace Hako
 		enum class DepthTestFunc;
 		enum class BlendFunc;
 		enum class CullFunc;
+		enum class TextureKind;
+		enum class TextureFormat;
+		enum class TextureFilter;
+		enum class TextureWrapping;
 
 
 		#ifdef HAKO_MODULE_GFX_OPENGL

@@ -18,6 +18,11 @@ Hako::Gfx::Scene::Reference Hako::Gfx::Scene::add_renderer(Hako::Gfx::Scene::Ref
 	Hako::Gfx::SceneRenderer renderer;
 	renderer.active         = true;
 	renderer.tree_reference = node_refer;
+	renderer.mesh           = nullptr;
+	renderer.material       = nullptr;
+	renderer.properties     = nullptr;
+	renderer.layer          = 0;
+	renderer.mask           = 0;
 
 	this->tree[node_refer].data.renderer.renderer_reference = this->renderers.add(renderer);
 
@@ -62,13 +67,14 @@ void Hako::Gfx::Scene::set_active(Hako::Gfx::Scene::Reference* refer, bool activ
 }
 
 
-void Hako::Gfx::Scene::set_renderer_mesh(Hako::Gfx::Scene::Reference* refer, Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material)
+void Hako::Gfx::Scene::set_renderer_mesh(Hako::Gfx::Scene::Reference* refer, Hako::Gfx::Mesh* mesh, Hako::Gfx::Material* material, Hako::Gfx::MaterialProperties* properties)
 {
 	Hako::Gfx::SceneNode* node = &this->tree[*refer];
 	HAKO_ASSERT(node->kind == SceneNode::Kind::Renderer, "scene node is not a renderer node");
 	Hako::Gfx::SceneRenderer* renderer = &this->renderers[node->data.renderer.renderer_reference];
-	renderer->mesh     = mesh;
-	renderer->material = material;
+	renderer->mesh       = mesh;
+	renderer->material   = material;
+	renderer->properties = properties;
 	node->dirty = true;
 }
 

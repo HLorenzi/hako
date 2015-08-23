@@ -3,6 +3,7 @@
 
 #include <hako/bindings_def.h>
 #include <hako/util/debug.h>
+#include <stdio.h>
 
 
 Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
@@ -73,8 +74,9 @@ void Hako::OpenGL::RenderOperation::render(float interpolation)
 
 void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneRenderer* renderer, Hako::Math::Matrix4* camera_projview)
 {
-	Hako::OpenGL::Material* material = renderer->material;
-	Hako::OpenGL::Mesh* mesh         = renderer->mesh;
+	Hako::OpenGL::Material* material          = renderer->material;
+	Hako::Gfx::MaterialProperties* properties = renderer->properties;
+	Hako::OpenGL::Mesh* mesh                  = renderer->mesh;
 
 	glUseProgram(material->gl_shader_program);
 
@@ -100,6 +102,16 @@ void Hako::OpenGL::RenderOperation::bind_mesh(Hako::Gfx::SceneRenderer* renderer
 
 	glUniformMatrix4fv(material->uniform_matrix_projview, 1, GL_FALSE, (GLfloat*)camera_projview->cell);
 	glUniformMatrix4fv(material->uniform_matrix_model,    1, GL_FALSE, (GLfloat*)renderer->transform_matrix.cell);
+
+	for (unsigned int i = 0; i < material->uniform_textures.length(); i++)
+	{
+		if (properties != nullptr && properties->slots_texture[i].used)
+		{
+			glUniform1i(material->uniform_textures[i].gl_location, 0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, properties->slots_texture[i].data->gl_texture);
+		}
+	}
 
 	material->set_render_state();
 	HAKO_OPENGL_CHECKERROR();
