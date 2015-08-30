@@ -31,6 +31,7 @@ namespace Hako
 			void set_lookat  (Hako::Math::Vector3 eye, Hako::Math::Vector3 target, Hako::Math::Vector3 up);
 			void lerp_lookat (Hako::Math::Vector3 eye, Hako::Math::Vector3 target, Hako::Math::Vector3 up);
 
+			void advance_interpolation_frame();
 			Hako::Math::Matrix4 get_matrix_projview(float interpolation);
 
 

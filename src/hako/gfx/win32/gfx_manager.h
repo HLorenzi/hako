@@ -25,7 +25,7 @@ namespace Hako
 
 			void process_events();
 			bool did_user_quit();
-			void render();
+			void render(float interpolation);
 
 
 		protected:

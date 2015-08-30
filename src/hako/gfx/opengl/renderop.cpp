@@ -42,8 +42,6 @@ Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
 
 void Hako::OpenGL::RenderOperation::render(float interpolation)
 {
-	HAKO_UNUSED(interpolation);
-
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	if (this->should_clear_color)
@@ -56,14 +54,14 @@ void Hako::OpenGL::RenderOperation::render(float interpolation)
 		(this->should_clear_color ? GL_COLOR_BUFFER_BIT : 0) |
 		(this->should_clear_depth ? GL_DEPTH_BUFFER_BIT : 0));
 
-	this->scene->refresh_matrices(0);
-	Hako::Math::Matrix4 camera_projview = this->camera->get_matrix_projview(0);
+	this->scene->refresh_matrices(interpolation);
+	Hako::Math::Matrix4 camera_projview = this->camera->get_matrix_projview(interpolation);
 
 	for (unsigned int i = 0; i < this->scene->renderers.length(); i++)
 	{
 		Hako::Gfx::SceneRenderer& renderer = this->scene->renderers.get_by_index(i);
 
-		if (renderer.active)
+		if (renderer.active && renderer.mesh != nullptr && renderer.material != nullptr)
 		{
 			this->bind_mesh(&renderer, &camera_projview);
 			this->draw_mesh(&renderer);

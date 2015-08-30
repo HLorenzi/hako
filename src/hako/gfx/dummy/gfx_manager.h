@@ -31,6 +31,8 @@ namespace Hako
 			RenderOperationReference add_operation    (Hako::Gfx::RenderOperation* scene);
 			void                     remove_operation (RenderOperationReference& ref);
 
+			void advance_interpolation_frame();
+
 		protected:
 			Hako::DS::DependencyChain<Hako::Gfx::RenderOperation*> operations;
 		};

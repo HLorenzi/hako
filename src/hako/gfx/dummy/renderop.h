@@ -25,6 +25,8 @@ namespace Hako
 				void set_clear_color(Hako::Math::Color color);
 				void set_clear_depth(float depth);
 
+				void advance_interpolation_frame();
+
 				Hako::Error generate();
 				void        destroy();
 

@@ -109,6 +109,8 @@
 		<Unit filename="src/hako/gfx/texture.h" />
 		<Unit filename="src/hako/gfx/win32/gfx_manager.cpp" />
 		<Unit filename="src/hako/gfx/win32/gfx_manager.h" />
+		<Unit filename="src/hako/helper/debug_font.cpp" />
+		<Unit filename="src/hako/helper/debug_font.h" />
 		<Unit filename="src/hako/helper/standard_materials.cpp" />
 		<Unit filename="src/hako/helper/standard_materials.h" />
 		<Unit filename="src/hako/helper/standard_materials/dummy.cpp" />

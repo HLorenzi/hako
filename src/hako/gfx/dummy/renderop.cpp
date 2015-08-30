@@ -1,4 +1,5 @@
 #include <hako/gfx/dummy/renderop.h>
+#include <hako/bindings_def.h>
 #include <hako/util/debug.h>
 
 
@@ -79,6 +80,16 @@ void Hako::Dummy::Gfx::RenderOperation::set_clear_depth(float depth)
 	HAKO_ASSERT(!this->generated, "cannot change render operation after it has been generated");
 	this->should_clear_depth = true;
 	this->clear_depth        = depth;
+}
+
+
+void Hako::Dummy::Gfx::RenderOperation::advance_interpolation_frame()
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	if (this->scene != nullptr)
+		this->scene->advance_interpolation_frame();
+	if (this->camera != nullptr)
+		this->camera->advance_interpolation_frame();
 }
 
 

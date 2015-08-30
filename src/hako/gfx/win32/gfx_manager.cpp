@@ -186,11 +186,11 @@ void Hako::Win32::GfxManager::opengl_disable(HWND hwnd, HDC hdc, HGLRC hrc)
 }
 
 
-void Hako::Win32::GfxManager::render()
+void Hako::Win32::GfxManager::render(float interpolation)
 {
 	for (unsigned int i = 0; i < this->operations.length(); i++)
 	{
-		this->operations.get_by_index(i)->render(0);
+		this->operations.get_by_index(i)->render(interpolation);
 	}
     SwapBuffers(this->hdc);
 }

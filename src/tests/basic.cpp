@@ -52,9 +52,9 @@ Hako::Error Test::Basic::init()
 	this->camera.init();
 	this->camera.set_projection_perspective(Hako::Math::deg_to_rad(45), 960.0f / 544.0f, 1, 200);
 	this->camera.set_lookat(
+		Hako::Math::Vector3::make(0, 0, 20),
 		Hako::Math::Vector3::make(0, 0, 0),
-		Hako::Math::Vector3::make(0, 0, 100),
-		Hako::Math::Vector3::make(0, -1, 0));
+		Hako::Math::Vector3::make(0, 0, 1));
 
 
 	this->color_buffer.init();
@@ -77,22 +77,23 @@ Hako::Error Test::Basic::init()
 	this->time = 0;
 
 
+	Hako::singleton()->set_updates_per_sec(1);
 	return Hako::Error::ok();
 }
 
 
 void Test::Basic::process()
 {
-	this->time += 0.01f;
+	this->time += Hako::Math::pi * 2 / 6.0f;
 
 	float x = (60 + 30 * cosf(this->time / 8.0f));
 	float y = 0;
-	this->camera.set_lookat(
+	this->camera.lerp_lookat(
 		Hako::Math::Vector3::make(x, y, 20),
 		Hako::Math::Vector3::make(0, 0, 0),
 		Hako::Math::Vector3::make(0, 0, 1));
 
-	this->scene.set_rotation(&this->node_rotation, Hako::Math::Vector3::make(0, 0, 1), this->time);
+	this->scene.lerp_rotation(&this->node_rotation, Hako::Math::Vector3::make(0, 0, 1), this->time);
 }
 
 
@@ -105,4 +106,5 @@ void Test::Basic::shutdown()
 	this->material    .destroy();
 	this->texture     .destroy();
 	this->mesh        .destroy();
+	this->debug_font  .destroy();
 }

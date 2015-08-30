@@ -5,6 +5,10 @@
 namespace Hako
 {
 	class Engine;
+	class Allocator;
+
+	Engine*         singleton();
+	Hako::Allocator singleton_allocator();
 
 
 	namespace Dummy

@@ -184,6 +184,32 @@ Hako::Gfx::Scene::Reference Hako::Gfx::Scene::add(Reference* parent, SceneNode n
 }
 
 
+void Hako::Gfx::Scene::advance_interpolation_frame()
+{
+	for (unsigned int i = 0; i < this->tree.count(); i++)
+	{
+		Hako::Gfx::SceneNode& node = this->tree.get_by_index(i);
+
+		switch (node.kind)
+		{
+			case Hako::Gfx::SceneNode::Kind::Translation:
+			{
+				node.data.translation.position_last = node.data.translation.position;
+				break;
+			}
+			case Hako::Gfx::SceneNode::Kind::Rotation:
+			{
+				node.data.rotation.axis_last  = node.data.rotation.axis;
+				node.data.rotation.angle_last = node.data.rotation.angle;
+				break;
+			}
+			default:
+				break;
+		}
+	}
+}
+
+
 void Hako::Gfx::Scene::refresh_matrices(float interpolation)
 {
 	unsigned int node_index = 0;
@@ -208,25 +234,25 @@ unsigned int Hako::Gfx::Scene::refresh_matrices_recursive(
 
     dirty = (dirty || node.dirty);
 
-    switch (node.kind)
-    {
+	switch (node.kind)
+	{
 		case Hako::Gfx::SceneNode::Kind::Renderer:
 		{
 			Hako::Gfx::SceneRenderer& renderer = this->renderers[node.data.renderer.renderer_reference];
-
-			if (dirty)
-				renderer.transform_matrix = cur_matrix;
-
+			renderer.transform_matrix = cur_matrix;
 			break;
 		}
 		case Hako::Gfx::SceneNode::Kind::Translation:
 		{
-            cur_matrix *= Hako::Math::Matrix4::make_translation(node.data.translation.position);
+			cur_matrix *= Hako::Math::Matrix4::make_translation(
+				Hako::Math::lerp3(node.data.translation.position_last, node.data.translation.position, interpolation));
 			break;
 		}
 		case Hako::Gfx::SceneNode::Kind::Rotation:
 		{
-            cur_matrix *= Hako::Math::Matrix4::make_rotation(node.data.rotation.axis, node.data.rotation.angle);
+			cur_matrix *= Hako::Math::Matrix4::make_rotation(
+				Hako::Math::slerp(node.data.rotation.axis_last, node.data.rotation.axis, interpolation),
+				Hako::Math::lerp(node.data.rotation.angle_last, node.data.rotation.angle, interpolation));
 			break;
 		}
 		default:
@@ -234,7 +260,7 @@ unsigned int Hako::Gfx::Scene::refresh_matrices_recursive(
 			HAKO_WARNING("unimplemented");
 			break;
 		}
-    }
+	}
 
 	node.dirty = false;
 

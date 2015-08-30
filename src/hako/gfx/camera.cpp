@@ -108,6 +108,14 @@ void Hako::Gfx::Camera::lerp_lookat(Hako::Math::Vector3 eye, Hako::Math::Vector3
 }
 
 
+void Hako::Gfx::Camera::advance_interpolation_frame()
+{
+	this->eye_last    = this->eye;
+	this->target_last = this->target;
+	this->up_last     = this->up;
+}
+
+
 Hako::Math::Matrix4 Hako::Gfx::Camera::get_matrix_projview(float interpolation)
 {
 	HAKO_UNUSED(interpolation);
@@ -144,7 +152,9 @@ Hako::Math::Matrix4 Hako::Gfx::Camera::get_matrix_projview(float interpolation)
 
 
 	Hako::Math::Matrix4 matrix_view = Hako::Math::Matrix4::make_lookat(
-		this->eye, this->target, this->up);
+		Hako::Math::lerp3(this->eye_last,    this->eye,    interpolation),
+		Hako::Math::lerp3(this->target_last, this->target, interpolation),
+		Hako::Math::lerp3(this->up_last,     this->up,     interpolation));
 
 
 	return matrix_proj * matrix_view;

@@ -25,6 +25,11 @@ void Hako::Engine::init()
 	HAKO_ASSERT(singleton_engine == nullptr, "engine has already been initialized");
 
 	singleton_engine = this;
+
+	this->use_interpolation       = true;
+	this->desired_frames_per_sec  = 60;
+	this->desired_updates_per_sec = 60;
+
 	this->memory_manager.init();
 	this->loop_manager.init();
 	this->gfx_manager.init();
@@ -50,3 +55,29 @@ void Hako::Engine::shutdown()
 	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
 	this->gfx_manager.shutdown();
 }
+
+
+void Hako::Engine::set_use_interpolation(bool use)
+{
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
+	this->use_interpolation = use;
+}
+
+
+void Hako::Engine::set_frames_per_sec(unsigned int num)
+{
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
+	HAKO_ASSERT(num > 0, "frames per second must not be zero");
+	HAKO_ASSERT(num <= 1024, "frames per second too high");
+	this->desired_frames_per_sec = num;
+}
+
+
+void Hako::Engine::set_updates_per_sec(unsigned int num)
+{
+	HAKO_ASSERT(singleton_engine != nullptr, "engine has not been initialized");
+	HAKO_ASSERT(num > 0, "updates per second must not be zero");
+	HAKO_ASSERT(num <= 1024, "updates per second too high");
+	this->desired_updates_per_sec = num;
+}
+

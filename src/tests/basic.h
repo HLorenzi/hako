@@ -3,6 +3,7 @@
 
 
 #include "framework.h"
+#include <hako/helper/debug_font.h>
 
 
 namespace Test
@@ -17,6 +18,8 @@ namespace Test
 
 	protected:
 		float time;
+
+		Hako::Helper::DebugFont debug_font;
 
 		Hako::Gfx::Mesh               mesh;
 		Hako::Gfx::Texture            texture;

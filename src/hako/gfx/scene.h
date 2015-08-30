@@ -116,6 +116,7 @@ namespace Hako
 			void lerp_scaling         (Reference* parent, Hako::Math::Vector3 scale);
 			void set_custom_transform (Reference* parent, Hako::Math::Matrix4 matrix);
 
+			void advance_interpolation_frame();
 			void refresh_matrices(float interpolation);
 
 
