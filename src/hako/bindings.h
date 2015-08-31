@@ -7,9 +7,6 @@ namespace Hako
 	class Engine;
 	class Allocator;
 
-	Engine*         singleton();
-	Hako::Allocator singleton_allocator();
-
 
 	namespace Dummy
 	{
@@ -87,7 +84,6 @@ namespace Hako
 		enum class TextureFilter;
 		enum class TextureWrapping;
 
-
 		#ifdef HAKO_MODULE_GFX_OPENGL
 			typedef Hako::OpenGL::Mesh            Mesh;
 			typedef Hako::OpenGL::Texture         Texture;
@@ -102,6 +98,11 @@ namespace Hako
 			typedef Hako::Dummy::Gfx::RenderOperation RenderOperation;
 		#endif
 	}
+
+
+	Engine*           singleton();
+	Hako::Allocator   singleton_allocator();
+	Hako::GfxManager* singleton_gfx();
 }
 
 

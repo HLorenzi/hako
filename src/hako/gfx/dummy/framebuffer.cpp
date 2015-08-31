@@ -58,6 +58,20 @@ Hako::Error Hako::Dummy::Gfx::FrameBuffer::generate()
 }
 
 
+unsigned int Hako::Dummy::Gfx::FrameBuffer::get_width()
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	return this->width;
+}
+
+
+unsigned int Hako::Dummy::Gfx::FrameBuffer::get_height()
+{
+	HAKO_ASSERT(this->initialized, "init() must be called before");
+	return this->height;
+}
+
+
 void Hako::Dummy::Gfx::FrameBuffer::destroy()
 {
 	HAKO_ASSERT(this->initialized, "init() has not been called");

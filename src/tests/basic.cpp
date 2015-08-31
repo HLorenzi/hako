@@ -50,7 +50,7 @@ Hako::Error Test::Basic::init()
 
 
 	this->camera.init();
-	this->camera.set_projection_perspective(Hako::Math::deg_to_rad(45), 960.0f / 544.0f, 1, 200);
+	this->camera.set_projection_perspective(Hako::Math::deg_to_rad(45), 256 / 256, 1, 200);
 	this->camera.set_lookat(
 		Hako::Math::Vector3::make(0, 0, 20),
 		Hako::Math::Vector3::make(0, 0, 0),
@@ -58,7 +58,7 @@ Hako::Error Test::Basic::init()
 
 
 	this->color_buffer.init();
-	this->color_buffer.set_dimensions(640, 480);
+	this->color_buffer.set_dimensions(256, 256);
 	this->color_buffer.set_format(Hako::Gfx::FrameBufferFormat::RGBA8);
 	this->color_buffer.generate();
 
@@ -71,7 +71,8 @@ Hako::Error Test::Basic::init()
 	this->renderop.generate();
 
 
-	this->renderop_ref = Hako::singleton()->gfx_manager.add_operation(&this->renderop);
+	Hako::singleton_gfx()->add_operation(&this->renderop);
+	Hako::singleton_gfx()->set_display_buffer(&this->color_buffer);
 
 
 	this->time = 0;
@@ -99,12 +100,11 @@ void Test::Basic::process()
 
 void Test::Basic::shutdown()
 {
-	Hako::singleton()->gfx_manager.remove_operation(this->renderop_ref);
+	Hako::singleton_gfx()->remove_operation(&this->renderop);
 	this->renderop    .destroy();
 	this->color_buffer.destroy();
 	this->properties  .destroy();
 	this->material    .destroy();
 	this->texture     .destroy();
 	this->mesh        .destroy();
-	this->debug_font  .destroy();
 }

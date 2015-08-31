@@ -189,6 +189,7 @@ void Hako::Gfx::Scene::advance_interpolation_frame()
 	for (unsigned int i = 0; i < this->tree.count(); i++)
 	{
 		Hako::Gfx::SceneNode& node = this->tree.get_by_index(i);
+        node.dirty = false;
 
 		switch (node.kind)
 		{
@@ -238,9 +239,12 @@ unsigned int Hako::Gfx::Scene::refresh_matrices_recursive(
 	{
 		case Hako::Gfx::SceneNode::Kind::Renderer:
 		{
-			Hako::Gfx::SceneRenderer& renderer = this->renderers[node.data.renderer.renderer_reference];
-			renderer.transform_matrix = cur_matrix;
-			break;
+		    if (dirty)
+            {
+                Hako::Gfx::SceneRenderer& renderer = this->renderers[node.data.renderer.renderer_reference];
+                renderer.transform_matrix = cur_matrix;
+            }
+            break;
 		}
 		case Hako::Gfx::SceneNode::Kind::Translation:
 		{
@@ -261,8 +265,6 @@ unsigned int Hako::Gfx::Scene::refresh_matrices_recursive(
 			break;
 		}
 	}
-
-	node.dirty = false;
 
 	unsigned int next_child_index = node_index + 1;
 	unsigned int child_count      = 0;

@@ -22,6 +22,9 @@ namespace Hako
 				void set_dimensions  (unsigned int width, unsigned int height);
 				void set_format      (Hako::Gfx::FrameBufferFormat format);
 
+				unsigned int get_width  ();
+				unsigned int get_height ();
+
 				Hako::Error generate ();
 				void        destroy  ();
 

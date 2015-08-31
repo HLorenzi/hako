@@ -192,7 +192,39 @@ void Hako::Win32::GfxManager::render(float interpolation)
 	{
 		this->operations.get_by_index(i)->render(interpolation);
 	}
+
+	if (this->display_buffer != nullptr)
+    {
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, this->gl_display_framebuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+        glBlitFramebuffer(0, 0, this->display_buffer->get_width(), this->display_buffer->get_height(),
+                          0, 0, 256, 256,// this->window_width, this->window_height,
+                          GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    }
+
     SwapBuffers(this->hdc);
+}
+
+
+void Hako::Win32::GfxManager::internal_set_display_buffer(Hako::Gfx::FrameBuffer* buffer)
+{
+    if (this->display_buffer == buffer)
+        return;
+
+	if (this->display_buffer != nullptr)
+        glDeleteFramebuffers(1, &this->gl_display_framebuffer);
+
+    if (buffer != nullptr)
+    {
+        glGenFramebuffers(1, &this->gl_display_framebuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->gl_display_framebuffer);
+
+        glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, buffer->gl_buffer, 0);
+
+        GLenum e = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+        if (e != GL_FRAMEBUFFER_COMPLETE)
+            HAKO_ERROR("opengl display framebuffer creation error");
+    }
 }
 
 

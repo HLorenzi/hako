@@ -42,7 +42,7 @@ Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
 
 void Hako::OpenGL::RenderOperation::render(float interpolation)
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->gl_framebuffer);
 
 	if (this->should_clear_color)
 		glClearColor(this->clear_color.r, this->clear_color.g, this->clear_color.b, this->clear_color.a);

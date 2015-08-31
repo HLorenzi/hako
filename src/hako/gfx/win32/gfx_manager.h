@@ -9,6 +9,7 @@
 
 
 #include <hako/gfx/dummy/gfx_manager.h>
+#include <hako/gfx/opengl/includes.h>
 #include <windows.h>
 
 
@@ -43,6 +44,9 @@ namespace Hako
 			// Window client size.
 			unsigned int window_width, window_height;
 
+			// OpenGL framebuffer for the display buffer.
+			GLuint gl_display_framebuffer;
+
 
 			// Window callback function used by Win32.
 			static LRESULT CALLBACK window_callback(
@@ -51,6 +55,9 @@ namespace Hako
 			// Win32 OpenGL setup.
 			void opengl_enable  (HWND hwnd, HDC* hdc, HGLRC* hrc);
 			void opengl_disable (HWND hwnd, HDC  hdc, HGLRC  hrc);
+
+            // Prepares the display framebuffer.
+			void internal_set_display_buffer(Hako::Gfx::FrameBuffer* buffer) override;
 		};
 	}
 }

@@ -39,7 +39,6 @@ namespace Hako
 			Hako::Gfx::Scene::Reference   renderer_node;
 			Hako::Gfx::FrameBuffer*       color_buffer;
 			Hako::Gfx::RenderOperation    renderop;
-			Hako::GfxManager::RenderOperationReference renderop_refer;
 		};
 	}
 }

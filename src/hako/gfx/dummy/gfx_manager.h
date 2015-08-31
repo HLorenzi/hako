@@ -28,13 +28,20 @@ namespace Hako
 			virtual Hako::Error shutdown()
 				{ return Hako::Error::ok(); }
 
-			RenderOperationReference add_operation    (Hako::Gfx::RenderOperation* scene);
-			void                     remove_operation (RenderOperationReference& ref);
+
+            void set_display_buffer (Hako::Gfx::FrameBuffer* buffer);
+
+            virtual void internal_set_display_buffer (Hako::Gfx::FrameBuffer* buffer)
+                { HAKO_UNUSED(buffer); }
+
+			void add_operation    (Hako::Gfx::RenderOperation* renderop);
+			void remove_operation (Hako::Gfx::RenderOperation* renderop);
 
 			void advance_interpolation_frame();
 
 		protected:
 			Hako::DS::DependencyChain<Hako::Gfx::RenderOperation*> operations;
+			Hako::Gfx::FrameBuffer* display_buffer;
 		};
 	}
 }

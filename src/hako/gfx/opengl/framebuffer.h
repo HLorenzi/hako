@@ -5,6 +5,7 @@
 #define HAKO_GFX_OPENGL_FRAMEBUFFER_H
 
 
+#include <hako/bindings.h>
 #include <hako/gfx/dummy/framebuffer.h>
 #include <hako/gfx/opengl/includes.h>
 
@@ -19,6 +20,7 @@ namespace Hako
 		class FrameBuffer : public Hako::Dummy::Gfx::FrameBuffer
 		{
 			friend class Hako::OpenGL::RenderOperation;
+			friend class Hako::Win32::GfxManager;
 
 
 		protected:

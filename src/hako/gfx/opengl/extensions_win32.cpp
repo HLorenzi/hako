@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 
+PTR_GLBLITFRAMEBUFFER          glBlitFramebuffer;
 PTR_GLGENBUFFERS               glGenBuffers;
 PTR_GLDELETEBUFFERS            glDeleteBuffers;
 PTR_GLBINDBUFFER               glBindBuffer;
@@ -96,6 +97,7 @@ namespace Hako
 			HAKO_WGL_GETFUNCTION(glRenderbufferStorage,      PTR_GLRENDERBUFFERSTORAGE);
 			HAKO_WGL_GETFUNCTION(glFramebufferRenderbuffer,  PTR_GLFRAMEBUFFERRENDERBUFFER);
 			HAKO_WGL_GETFUNCTION(glDeleteRenderbuffers,      PTR_GLDELETERENDERBUFFERS);
+			HAKO_WGL_GETFUNCTION(glBlitFramebuffer,          PTR_GLBLITFRAMEBUFFER);
 			//HAKO_WGL_GETFUNCTION(glFramebufferParameteri,  PTR_GLFRAMEBUFFERPARAMETERI);
 			HAKO_WGL_GETFUNCTION(glFramebufferTexture,       PTR_GLFRAMEBUFFERTEXTURE);
 			HAKO_WGL_GETFUNCTION(glFramebufferTexture1D,     PTR_GLFRAMEBUFFERTEXTURE1D);

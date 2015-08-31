@@ -20,6 +20,12 @@ Hako::Allocator Hako::singleton_allocator()
 }
 
 
+Hako::GfxManager* Hako::singleton_gfx()
+{
+	return &Hako::singleton()->gfx_manager;
+}
+
+
 void Hako::Engine::init()
 {
 	HAKO_ASSERT(singleton_engine == nullptr, "engine has already been initialized");

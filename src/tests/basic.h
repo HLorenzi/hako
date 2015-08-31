@@ -19,8 +19,6 @@ namespace Test
 	protected:
 		float time;
 
-		Hako::Helper::DebugFont debug_font;
-
 		Hako::Gfx::Mesh               mesh;
 		Hako::Gfx::Texture            texture;
 		Hako::Gfx::Material           material;
@@ -34,8 +32,7 @@ namespace Test
 		Hako::Gfx::FrameBuffer color_buffer;
 		Hako::Gfx::FrameBuffer depth_buffer;
 
-		Hako::Gfx::RenderOperation                 renderop;
-		Hako::GfxManager::RenderOperationReference renderop_ref;
+		Hako::Gfx::RenderOperation renderop;
 	};
 }
 

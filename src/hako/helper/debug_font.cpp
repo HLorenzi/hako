@@ -159,6 +159,8 @@ Hako::Helper::DebugFont::~DebugFont()
 
 void Hako::Helper::DebugFont::init(Hako::Gfx::RenderOperation* renderop, Hako::Gfx::FrameBuffer* color_buffer)
 {
+    HAKO_UNUSED(renderop);
+
 	unsigned char* decompressed_pixels =
 		(unsigned char*)Hako::singleton_allocator().allocate.call(256 * 64 * 4, 32);
 
@@ -197,7 +199,7 @@ void Hako::Helper::DebugFont::init(Hako::Gfx::RenderOperation* renderop, Hako::G
 	this->renderop.set_scene(&this->camera, &this->scene, 0);
 	this->renderop.set_color_buffer(0, color_buffer);
 
-	this->renderop_refer = Hako::singleton()->gfx_manager.add_operation(&this->renderop);
+	Hako::singleton_gfx()->add_operation(&this->renderop);
 
 #ifdef HAKO_BUILD_DEBUG
 	this->initialized = true;
@@ -208,7 +210,7 @@ void Hako::Helper::DebugFont::init(Hako::Gfx::RenderOperation* renderop, Hako::G
 void Hako::Helper::DebugFont::destroy()
 {
 	HAKO_ASSERT(this->initialized, "init() was not called");
-	Hako::singleton()->gfx_manager.remove_operation(this->renderop_refer);
+	Hako::singleton_gfx()->remove_operation(&this->renderop);
 	this->renderop   .destroy();
 	this->material   .destroy();
 	this->properties .destroy();

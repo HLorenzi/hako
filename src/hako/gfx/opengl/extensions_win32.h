@@ -23,6 +23,7 @@ namespace Hako
 
 typedef char GLchar;
 
+typedef void(APIENTRY *PTR_GLBLITFRAMEBUFFER)(GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum);
 typedef void(APIENTRY *PTR_GLGENBUFFERS)(GLsizei, GLuint*);
 typedef void(APIENTRY *PTR_GLDELETEBUFFERS)(GLsizei, GLuint*);
 typedef void(APIENTRY *PTR_GLBINDBUFFER)(GLenum, GLuint);
@@ -72,6 +73,7 @@ typedef GLint(APIENTRY* PTR_GLGETATTRIBLOCATION)(GLuint, const GLchar*);
 typedef void(APIENTRY* PTR_GLBINDFRAGDATALOCATION)(GLuint, GLuint, const char*);
 typedef const char*(APIENTRY* PTR_GLGETSTRINGI)(GLenum, GLint);
 
+extern PTR_GLBLITFRAMEBUFFER          glBlitFramebuffer;
 extern PTR_GLBINDFRAGDATALOCATION     glBindFragDataLocation;
 extern PTR_GLGETATTRIBLOCATION        glGetAttribLocation;
 extern PTR_GLGENVERTEXARRAYS          glGenVertexArrays;

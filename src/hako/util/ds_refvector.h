@@ -113,6 +113,27 @@ namespace Hako
 			}
 
 
+			void remove_by_index(unsigned int index)
+			{
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				HAKO_ASSERT(index < this->length(), "index out of bounds");
+				this->items      .remove(index);
+				this->identifiers.remove(index);
+			}
+
+
+			int find_index(T value)
+            {
+				HAKO_ASSERT(this->initialized, "init() must be called before");
+				for (int i = 0; i < this->length(); i++)
+                {
+                    if (this->items[i] == value)
+                        return i;
+                }
+                return -1;
+            }
+
+
 			unsigned int length()
 			{
 				HAKO_ASSERT(this->initialized, "init() must be called before");

@@ -31,8 +31,9 @@ namespace Hako
 	};
 
 
-	Engine*         singleton();
-	Hako::Allocator singleton_allocator();
+	Engine*           singleton();
+	Hako::Allocator   singleton_allocator();
+	Hako::GfxManager* singleton_gfx();
 }
 
 
