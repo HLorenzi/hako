@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
+Hako::Error Hako::OpenGL::RenderOperation::internal_apply()
 {
 	// Set up an OpenGL framebuffer.
 	glGenFramebuffers(1, &this->gl_framebuffer);
@@ -43,6 +43,7 @@ Hako::Error Hako::OpenGL::RenderOperation::internal_generate()
 void Hako::OpenGL::RenderOperation::render(float interpolation)
 {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->gl_framebuffer);
+    glViewport(0, 0, this->color_buffers[0]->width, this->color_buffers[0]->height);
 
 	if (this->should_clear_color)
 		glClearColor(this->clear_color.r, this->clear_color.g, this->clear_color.b, this->clear_color.a);

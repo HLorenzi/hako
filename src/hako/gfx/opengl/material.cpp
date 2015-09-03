@@ -111,7 +111,7 @@ void Hako::OpenGL::Material::set_render_state()
 }
 
 
-Hako::Error Hako::OpenGL::Material::internal_generate()
+Hako::Error Hako::OpenGL::Material::internal_apply()
 {
 	this->gl_shader_program = glCreateProgram();
 

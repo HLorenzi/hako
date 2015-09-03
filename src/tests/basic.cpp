@@ -14,7 +14,7 @@ Hako::Error Test::Basic::init()
 	this->mesh.set_data(Hako::Gfx::MeshData::Color,    0, 6, mesh_colors);
 	this->mesh.set_data(Hako::Gfx::MeshData::TexCoord, 0, 6, mesh_texcoords);
 	this->mesh.set_indices(0, 6, mesh_indices);
-	this->mesh.generate();
+	this->mesh.apply();
 
 
 	Hako::Helper::StandardMaterials::Options options;
@@ -32,7 +32,7 @@ Hako::Error Test::Basic::init()
 	this->texture.set_2d(2, 2, 1);
 	this->texture.set_format(Hako::Gfx::TextureFormat::LinearRGBA8);
 	this->texture.set_data(0, 0, texture_pixels);
-	this->texture.generate();
+	this->texture.apply();
 
 
 	this->properties.init();
@@ -60,15 +60,21 @@ Hako::Error Test::Basic::init()
 	this->color_buffer.init();
 	this->color_buffer.set_dimensions(256, 256);
 	this->color_buffer.set_format(Hako::Gfx::FrameBufferFormat::RGBA8);
-	this->color_buffer.generate();
+	this->color_buffer.apply();
+
+	this->depth_buffer.init();
+	this->depth_buffer.set_dimensions(256, 256);
+	this->depth_buffer.set_format(Hako::Gfx::FrameBufferFormat::Depth);
+	this->depth_buffer.apply();
 
 
 	this->renderop.init();
 	this->renderop.set_scene(&this->camera, &this->scene, 0);
 	this->renderop.set_color_buffer(0, &this->color_buffer);
+	this->renderop.set_depth_buffer(&this->depth_buffer);
 	this->renderop.set_clear_color(Hako::Math::Color::make(0, 0, 0, 1));
 	this->renderop.set_clear_depth(1);
-	this->renderop.generate();
+	this->renderop.apply();
 
 
 	Hako::singleton_gfx()->add_operation(&this->renderop);
@@ -103,6 +109,7 @@ void Test::Basic::shutdown()
 	Hako::singleton_gfx()->remove_operation(&this->renderop);
 	this->renderop    .destroy();
 	this->color_buffer.destroy();
+	this->depth_buffer.destroy();
 	this->properties  .destroy();
 	this->material    .destroy();
 	this->texture     .destroy();

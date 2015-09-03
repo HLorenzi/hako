@@ -58,7 +58,7 @@ void Hako::Win32::LoopManager::loop(Hako::Callback<void> loop_callback)
 		}
 
 		long long timer_frame = win32_get_timer_microseconds();
-		long long millisec_to_sleep = (1000 / 120) - ((timer_frame - timer_begin) / 1000);
+		long long millisec_to_sleep = (1000 / 80) - ((timer_frame - timer_begin) / 1000);
 
 		if (millisec_to_sleep > 0)
 			Sleep(millisec_to_sleep);

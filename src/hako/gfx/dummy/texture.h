@@ -27,7 +27,7 @@ namespace Hako
 				void set_format   (Hako::Gfx::TextureFormat format);
 				void set_data     (unsigned int index, unsigned int mip_level, void* data);
 
-				Hako::Error generate();
+				Hako::Error apply();
 				void        destroy();
 
 
@@ -35,7 +35,7 @@ namespace Hako
 				virtual void internal_init()
 					{ }
 
-				virtual Hako::Error internal_generate()
+				virtual Hako::Error internal_apply()
 					{ return Hako::Error::ok(); }
 
 				virtual void internal_destroy()

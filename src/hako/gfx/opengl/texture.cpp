@@ -11,7 +11,7 @@ void Hako::OpenGL::Texture::internal_init()
 }
 
 
-Hako::Error Hako::OpenGL::Texture::internal_generate()
+Hako::Error Hako::OpenGL::Texture::internal_apply()
 {
 	HAKO_ASSERT(this->kind == Hako::Gfx::TextureKind::TwoDimensions, "unimplemented");
 

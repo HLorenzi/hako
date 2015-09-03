@@ -20,7 +20,7 @@ namespace Hako
 				~Material();
 				void init();
 
-				Hako::Error generate();
+				Hako::Error apply();
 				void        destroy();
 
 
@@ -28,7 +28,7 @@ namespace Hako
 				virtual void internal_init()
 					{ }
 
-				virtual Hako::Error internal_generate()
+				virtual Hako::Error internal_apply()
 					{ return Hako::Error::ok(); }
 
 				virtual void internal_destroy()

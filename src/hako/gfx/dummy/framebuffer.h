@@ -25,12 +25,12 @@ namespace Hako
 				unsigned int get_width  ();
 				unsigned int get_height ();
 
-				Hako::Error generate ();
+				Hako::Error apply ();
 				void        destroy  ();
 
 
 			protected:
-				virtual Hako::Error internal_generate()
+				virtual Hako::Error internal_apply()
 					{ return Hako::Error::ok(); }
 
 				virtual void internal_destroy()

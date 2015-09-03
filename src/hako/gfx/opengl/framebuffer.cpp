@@ -5,7 +5,7 @@
 #include <hako/util/debug.h>
 
 
-Hako::Error Hako::OpenGL::FrameBuffer::internal_generate()
+Hako::Error Hako::OpenGL::FrameBuffer::internal_apply()
 {
 	glGenTextures(1, &this->gl_buffer);
 	glBindTexture(GL_TEXTURE_2D, this->gl_buffer);

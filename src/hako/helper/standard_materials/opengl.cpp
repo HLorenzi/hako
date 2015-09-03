@@ -81,7 +81,7 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 
 	material->set_shader_sources(vertex_src, pixel_src);
 	set_options(material, options);
-	material->generate();
+	material->apply();
 }
 
 
@@ -119,7 +119,7 @@ void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Mater
 	material->uniform_textures[0].name            = "main_texture";
 	material->uniform_textures[0].gl_uniform_name = "uniform_texture";
 	set_options(material, options);
-	material->generate();
+	material->apply();
 }
 
 

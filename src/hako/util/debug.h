@@ -16,13 +16,18 @@
 	namespace Hako
 	{
 		void assert_handler(bool condition, const char* msg, const char* filename, int line);
-		void warning_handler(const char* msg, const char* filename, int line);
+		void warning_handler(bool condition, const char* msg, const char* filename, int line);
 	}
 
 
 	// Runtime assert.
 	#define HAKO_ASSERT(cond, msg) \
 		do { Hako::assert_handler(cond, msg, __FILE__, __LINE__); } while (0)
+
+
+	// Runtime assert that does not crash the application.
+	#define HAKO_CHECK(cond, msg) \
+		do { Hako::warning_handler(cond, msg, __FILE__, __LINE__); } while (0)
 
 
 	// Runtime error.
@@ -32,11 +37,12 @@
 
 	// Runtime warning that is printed to the console, but does not crash the application.
 	#define HAKO_WARNING(msg) \
-		do { Hako::warning_handler(msg, __FILE__, __LINE__); } while (0)
+		HAKO_CHECK(false, msg)
 
 
 #else
 	#define HAKO_ASSERT(cond, msg) do { } while (0)
+	#define HAKO_CHECK(cond, msg)  do { } while (0)
 	#define HAKO_ERROR(msg)        do { } while (0)
 	#define HAKO_WARNING(msg)      do { } while (0)
 #endif

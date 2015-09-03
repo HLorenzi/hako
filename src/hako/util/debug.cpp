@@ -27,8 +27,11 @@ void Hako::assert_handler(bool condition, const char* msg, const char* filename,
 }
 
 
-void Hako::warning_handler(const char* msg, const char* filename, int line)
+void Hako::warning_handler(bool condition, const char* msg, const char* filename, int line)
 {
+	if (condition)
+		return;
+
 	printf(
 		"==========================================================\n"
 		"HAKO_WARNING: %s\n"

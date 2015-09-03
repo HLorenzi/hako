@@ -182,7 +182,7 @@ void Hako::Helper::DebugFont::init(Hako::Gfx::RenderOperation* renderop, Hako::G
 	this->texture.set_format(Hako::Gfx::TextureFormat::LinearRGBA8);
 	this->texture.set_filter(Hako::Gfx::TextureFilter::Nearest);
 	this->texture.set_data(0, 0, decompressed_pixels);
-	this->texture.generate();
+	this->texture.apply();
 
 	Hako::singleton_allocator().free.call(decompressed_pixels);
 

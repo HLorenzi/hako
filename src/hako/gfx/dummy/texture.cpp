@@ -78,12 +78,12 @@ void Hako::Dummy::Gfx::Texture::set_data(unsigned int index, unsigned int mip_le
 }
 
 
-Hako::Error Hako::Dummy::Gfx::Texture::generate()
+Hako::Error Hako::Dummy::Gfx::Texture::apply()
 {
 	HAKO_ASSERT(this->initialized, "init() must be called before");
-	HAKO_ASSERT(!this->generated, "generate() has already been called");
+	HAKO_ASSERT(!this->generated, "apply() has already been called");
 
-	Hako::Error err = this->internal_generate();
+	Hako::Error err = this->internal_apply();
 #ifdef HAKO_BUILD_DEBUG
 	if (err.is_ok())
 		this->generated = true;
@@ -96,7 +96,7 @@ Hako::Error Hako::Dummy::Gfx::Texture::generate()
 void Hako::Dummy::Gfx::Texture::destroy()
 {
 	HAKO_ASSERT(this->initialized, "init() has not been called");
-	HAKO_ASSERT(this->generated, "generate() has not been called");
+	HAKO_ASSERT(this->generated, "apply() has not been called");
 	this->internal_destroy();
 #ifdef HAKO_BUILD_DEBUG
 	this->generated = false;

@@ -27,26 +27,30 @@ namespace Hako
 
 				void advance_interpolation_frame();
 
-				Hako::Error generate();
+				Hako::Error apply();
 				void        destroy();
 
 
 			protected:
-				virtual Hako::Error internal_generate()
+				virtual Hako::Error internal_apply()
 					{ return Hako::Error::ok(); }
 
 				virtual void internal_destroy()
 					{ }
+
+                void check_buffer_dimensions();
 
 
 			#ifdef HAKO_BUILD_DEBUG
 				bool initialized;
 				bool generated;
 			#endif
+                static const int COLOR_BUFFER_NUM = 4;
+
 				Hako::Gfx::Camera*      camera;
 				unsigned int            camera_mask;
 				Hako::Gfx::Scene*       scene;
-				Hako::Gfx::FrameBuffer* color_buffers[4];
+				Hako::Gfx::FrameBuffer* color_buffers[COLOR_BUFFER_NUM];
 				Hako::Gfx::FrameBuffer* depth_buffer;
 
 				bool should_clear_color;

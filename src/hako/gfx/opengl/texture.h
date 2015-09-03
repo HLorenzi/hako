@@ -21,7 +21,7 @@ namespace Hako
 
 		protected:
 			void        internal_init() override;
-			Hako::Error internal_generate() override;
+			Hako::Error internal_apply() override;
 			void        internal_destroy() override;
 
 

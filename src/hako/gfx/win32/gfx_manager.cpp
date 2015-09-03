@@ -48,7 +48,7 @@ Hako::Error Hako::Win32::GfxManager::show()
 	this->hwnd = CreateWindowEx(0,
 		"Hako Game Engine", "Hako Game Engine",
 		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-		960, 544, NULL, NULL, module_handle, NULL);
+		512, 512, NULL, NULL, module_handle, NULL);
 
 	SetWindowLongPtr(this->hwnd, GWL_USERDATA, (LONG_PTR)this);
 	ShowWindow(this->hwnd, true);
@@ -132,7 +132,6 @@ LRESULT CALLBACK Hako::Win32::GfxManager::window_callback(HWND hwnd, UINT uMsg, 
 			Hako::Win32::GfxManager* gfx_manager =
 				(Hako::Win32::GfxManager*)GetWindowLongPtr(hwnd, GWL_USERDATA);
 			gfx_manager->set_window_size();
-			glViewport(0, 0, gfx_manager->window_width, gfx_manager->window_height);
 			break;
 		}
 
@@ -198,7 +197,7 @@ void Hako::Win32::GfxManager::render(float interpolation)
         glBindFramebuffer(GL_READ_FRAMEBUFFER, this->gl_display_framebuffer);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
         glBlitFramebuffer(0, 0, this->display_buffer->get_width(), this->display_buffer->get_height(),
-                          0, 0, 256, 256,// this->window_width, this->window_height,
+                          0, 0, this->window_width, this->window_height,
                           GL_COLOR_BUFFER_BIT, GL_NEAREST);
     }
 

@@ -10,7 +10,7 @@ void Hako::Helper::StandardMaterials::make_basic_color(Hako::Gfx::Material* mate
 {
 	HAKO_UNUSED(options);
 	material->init();
-	material->generate();
+	material->apply();
 }
 
 
@@ -18,7 +18,7 @@ void Hako::Helper::StandardMaterials::make_basic_textured_color(Hako::Gfx::Mater
 {
 	HAKO_UNUSED(options);
 	material->init();
-	material->generate();
+	material->apply();
 }
 
 
